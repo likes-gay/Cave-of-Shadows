@@ -1,11 +1,11 @@
-import json
-import pathlib
+import json, pathlib
 from io import TextIOWrapper
 from typing import TypedDict
-from inputs import get_valid_input, get_valid_arr_input, get_valid_bool_input
+from inputs import get_valid_input, get_valid_arr_input
 from datetime import datetime
 
-game_word = {
+RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
+GAME_WORLD = {
 	"Cave Entrance": {
 		"description": "You stand at the entrance of the Cave of Shadows. The air is thick with the scent of damp earth and decay. Faint whispers seem to call from within.",
 		"options": [
@@ -151,18 +151,16 @@ class PlayerDataType(TypedDict):
 	game_name: str
 	last_updated: int
 
-resource_location = pathlib.Path(__file__).parent.resolve()
-
 def get_save_game_contents(file_pointer: TextIOWrapper | None = None) -> list[PlayerDataType]:
 	try:
 		if file_pointer is None:
-			with open(f"{resource_location}/saved_game.json", "r") as file_pointer:
+			with open(f"{RESOURCE_PATH}/saved_game.json", "r") as file_pointer:
 				return json.load(file_pointer)
 		
 		file_pointer.seek(0)
 		return json.load(file_pointer)
 	except (FileNotFoundError, json.JSONDecodeError):
-		with open(f"{resource_location}/saved_game.json", "w") as file_pointer:
+		with open(f"{RESOURCE_PATH}/saved_game.json", "w") as file_pointer:
 			json.dump([], file_pointer)
 		return []
 
@@ -173,14 +171,14 @@ class PlayerData():
 	last_updated: int
 
 	def __init__(self):
-		self.current_location = list(game_word.keys())[0]
+		self.current_location = list(GAME_WORLD.keys())[0]
 		self.inventory = []
 	
 	def play_game(self):
-		if self.current_location not in game_word:
+		if self.current_location not in GAME_WORLD:
 			print("Game Over, this needs to be created")
 			return False
-		location = game_word[self.current_location]
+		location = GAME_WORLD[self.current_location]
 		print("You are at " + self.current_location)
 		print(location["description"])
 
@@ -244,13 +242,13 @@ class PlayerData():
 			if not game_found:
 				all_player_datas.append(self.__dict__)
 		
-		with open(f"{resource_location}/saved_game.json", "w") as f:
+		with open(f"{RESOURCE_PATH}/saved_game.json", "w") as f:
 			json.dump(all_player_datas, f)
 
 
 
 if __name__ == "__main__":
-	with open(f"{resource_location}/resources/AdventureSoft_logo.txt", "r") as f:
+	with open(f"{RESOURCE_PATH}/resources/AdventureSoft_logo.txt", "r") as f:
 		print(f"Welcome to...\n{f.read()}")
 	
 	while True:
