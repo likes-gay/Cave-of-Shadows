@@ -22,7 +22,7 @@ GAME_WORLD = {
 	},
 
 	"Village": {
-		"description": "You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision. You feel the warmth of the tavern ahead as the night deepens.",
+		"description": "You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision. You feel the warmth of the tavern ahead as the night deepens. \nYou decide to rest for the night and check out the cave tomorrow instead",
 		"options": [],
 		"items": []
 	},
@@ -185,7 +185,7 @@ class PlayerData():
 		if not location["options"]:
 			return False
 
-		choice = get_valid_arr_input("What do you want to do next?: ", list(map(lambda x: x["name"], location["options"])))
+		choice = get_valid_arr_input("\nWhat do you want to do next?: ", list(map(lambda x: x["name"], location["options"])))
 		self.current_location = location["options"][choice]["next"]
 		self._save_game()
 		return True
