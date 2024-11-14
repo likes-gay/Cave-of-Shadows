@@ -6,144 +6,137 @@ from datetime import datetime
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 GAME_WORLD = {
-	"Cave Entrance": {
-		"description": "You stand at the entrance of the Cave of Shadows. The air is thick with the scent of damp earth and decay. Faint whispers seem to call from within.",
-		"options": [
-			{
-				"name": "Enter the Cave",
-				"next": "Dark Tunnel"
-			},
-			{
-				"name": "Turn Back",
-				"next": "Village"
-			}
-		],
-		"items": []
-	},
+    "Cave Entrance": {
+        "description": (
+            "You stand at the entrance of the Cave of Shadows. The air is thick with the scent of damp earth and decay. "
+            "Faint whispers seem to call from within. Do you have the courage to step inside?"
+        ),
+        "options": [
+            {"name": "Enter the Cave", "next": "Dark Tunnel"},
+            {"name": "Turn Back", "next": "Village"}
+        ],
+        "items": []
+    },
 
-	"Village": {
-		"description": "You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision. You feel the warmth of the tavern ahead as the night deepens. \nYou decide to rest for the night and check out the cave tomorrow instead",
-		"options": [],
-		"items": []
-	},
+    "Village": {
+        "description": (
+            "You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision. "
+            "The warmth of the tavern greets you as the night deepens. You've decided to relax and live another day."
+        ),
+        "options": [],
+        "items": []
+    },
 
-	"Dark Tunnel": {
-		"description": "You step into the darkness. The light from your lantern flickers and dances as you walk deeper into the cave. Suddenly, the path ahead splits into two directions.",
-		"options": [
-			{
-				"name": "Take the Narrow Path",
-				"next": "Narrow Path"
-			},
-			{
-				"name": "Take the Wide Path",
-				"next": "Wide Path"
-			}
-		],
-		"items": []
-	},
+    "Dark Tunnel": {
+        "description": (
+            "You step into the darkness. The light from your lantern flickers and dances as you walk deeper into the cave. "
+            "It’s eerily quiet except for the sound of your footsteps echoing against the stone walls. Suddenly, the path ahead splits into two."
+        ),
+        "options": [
+            {"name": "Take the Narrow Path", "next": "Narrow Path"},
+            {"name": "Take the Wide Path", "next": "Wide Path"}
+        ],
+        "items": []
+    },
 
-	"Narrow Path": {
-		"description": "You crawl through the tight space, the lantern flickering nervously as the walls close in. After a while, the ground suddenly gives way beneath you.",
-		"options": [
-			{
-				"name": "Try to Climb Out",
-				"next": "Bad Ending - Fall to Doom"
-			},
-			{
-				"name": "Stay Still",
-				"next": "Pit Ledge Escape"
-			}
-		],
-		"items": []
-	},
+    "Narrow Path": {
+        "description": (
+            "You crawl through the tight space, your lantern flickering nervously as the walls close in on you. "
+            "After a while, the ground suddenly gives way beneath you."
+        ),
+        "options": [
+            {"name": "Try to Climb Out", "next": "Bad Ending - Fall to Doom"},
+            {"name": "Stay Still", "next": "Pit Ledge Escape"}
+        ],
+        "items": []
+    },
 
-	"Bad Ending - Fall to Doom": {
-		"description": "You struggle to climb, but the walls are too slick. The pit seems endless. Darkness closes in as your strength fades. The cave claims another victim.",
-		"options": [],
-		"items": []
-	},
+    "Bad Ending - Fall to Doom": {
+        "description": (
+            "You struggle to climb, but the walls are too slick. The pit seems endless. Darkness closes in as your strength fades. "
+            "The cave claims another victim."
+        ),
+        "options": [],
+        "items": []
+    },
 
 	"Pit Ledge Escape": {
-		"description": "You pause, letting your eyes adjust to the darkness. Eventually, you spot a narrow ledge along the pit's edge. You climb onto it and manage to escape. You return to the fork in the path.",
-		"options": [
-			{
-				"name": "Take the Wide Path",
-				"next": "Wide Path"
-			}
-		],
-		"items": []
+    	"description": (
+        	"You pause, letting your eyes adjust to the darkness. Eventually, you spot a narrow ledge along the edge of the pit. "
+        	"You carefully climb onto it and manage to escape. You find yourself back at the fork in the path, with two choices ahead."
+    	),
+    	"options": [
+        	{"name": "Take the Wide Path", "next": "Wide Path"},
+        	{"name": "Leave the Cave", "next": "Leave Cave - Neutral Ending"}
+    	],
+    	"items": []
 	},
 
-	"Wide Path": {
-		"description": "You follow the wider path toward a faint glow in the distance. Soon, you find yourself in a large cavernous room. A glowing chest sits in the center, with strange symbols carved into the walls.",
-		"options": [
-			{
-				"name": "Open the Chest",
-				"next": "Treasure Room - Chest Opened"
-			},
-			{
-				"name": "Leave the Chest",
-				"next": "Leave Cave - Neutral Ending 1"
-			}
-		],
-		"items": []
-	},
 
-	"Treasure Room - Chest Opened": {
-		"description": "You open the chest and find a crystal relic pulsing with energy. As you grasp it, a monstrous creature emerges from the shadows. The battle is about to begin.",
-		"options": [
-			{
-				"name": "Use the Relic's Light to Blind the Creature",
-				"next": "Victory - Success Ending"
-			},
-			{
-				"name": "Use the Relic to Charge Your Sword with Power",
-				"next": "Creature Attack - Tragic Ending"
-			},
-			{
-				"name": "Throw the Relic as a Distraction and Attack",
-				"next": "Creature Attack - Tragic Ending"
-			}
-		],
-		"items": ["Crystal Relic"]
-	},
-	
-	"Creature Attack - Tragic Ending": {
-		"description": "You fail to control the relic's power. The creature attacks swiftly, and in a heartbeat, your life is taken. The Cave of Shadows claims another soul.",
-		"options": [],
-		"items": []
-	},
+    "Wide Path": {
+        "description": (
+            "You follow the wider path toward a faint glow in the distance. Soon, you find yourself in a large cavernous room. "
+            "A glowing chest sits in the center, with strange symbols carved into the walls."
+        ),
+        "options": [
+            {"name": "Open the Chest", "next": "Treasure Room - Chest Opened"},
+            {"name": "Leave the Chest", "next": "Leave Cave - Neutral Ending"}
+        ],
+        "items": []
+    },
 
-	"Creature Attack - Tragic Ending 2": {
-		"description": "You attempt to throw the relic as a distraction, but the creature ignores it. It charges at you, striking swiftly, and your life fades in the darkness.",
-		"options": [],
-		"items": []
-	},
+    "Treasure Room - Chest Opened": {
+        "description": (
+            "You open the chest and find a crystal relic pulsing with energy. As you grasp it, a monstrous creature emerges from the shadows. "
+            "The battle is about to begin."
+        ),
+        "options": [
+            {"name": "Use the Relic’s Light to Blind the Creature", "next": "Victory - Success Ending"},
+            {"name": "Use the Relic to Charge Your Sword with Power", "next": "Creature Attack - Tragic Ending"},
+            {"name": "Throw the Relic as a Distraction and Attack", "next": "Creature Attack - Tragic Ending 2"}
+        ],
+        "items": ["Crystal Relic"]
+    },
 
-	"Victory - Success Ending": {
-		"description": "You raise the relic high, blinding the creature. Seizing the opportunity, you strike with your sword, killing it. The treasure is yours, and you return to the village as a hero.",
-		"options": [],
-		"items": ["Crystal Relic", "Ancient Treasure"]
-	},
+    "Creature Attack - Tragic Ending": {
+        "description": (
+            "You fail to control the relic's power. The creature attacks swiftly, and in a heartbeat, your life is taken. "
+            "The Cave of Shadows claims another soul."
+        ),
+        "options": [],
+        "items": []
+    },
 
-	"Leave Cave - Neutral Ending 1": {
-		"description": "You decide that the chest isn't worth the risk. You leave the cave empty-handed but alive. The village is a welcome sight as you return, but something nags at you — the treasure remains lost.",
-		"options": [],
-		"items": []
-	},
+    "Creature Attack - Tragic Ending 2": {
+        "description": (
+            "You attempt to throw the relic as a distraction, but the creature ignores it. It charges at you, striking swiftly, "
+            "and your life fades in the darkness."
+        ),
+        "options": [],
+        "items": []
+    },
 
-	"Leave Cave - Neutral Ending 2": {
-		"description": "You leave the cave, walking away from the unknown dangers. The village feels safer as you return, but you can't help but wonder what the treasure could have meant.",
-		"options": [],
-		"items": []
-	},
+    "Victory - Success Ending": {
+        "description": (
+            "You raise the relic high, blinding the creature. Seizing the opportunity, you strike with your sword, killing it. "
+            "The treasure is yours, and you return to the village as a hero."
+        ),
+        "options": [],
+        "items": ["Crystal Relic", "Ancient Treasure"]
+    },
 
-	"Leave Cave - Neutral Ending 3": {
-		"description": "You exit the cave, choosing to live rather than risk everything for treasure. You return to the village and settle into a quiet life, but the mystery of the cave lingers in your thoughts.",
-		"options": [],
-		"items": []
-	}
+	"Leave Cave - Neutral Ending": {
+    	"description": (
+        	"You decide that the dangers of the cave are too great. Retracing your steps, you carefully make your way back to the entrance. "
+        	"The cool night air greets you as you step outside. Though you leave the cave empty-handed, you feel relieved to be alive. "
+        	"The treasure, if it truly exists, will remain hidden — for now."
+    ),
+    "options": [],
+    "items": []
 }
+
+}
+
 
 class PlayerDataType(TypedDict):
 	current_location: str
@@ -179,7 +172,7 @@ class PlayerData():
 			print("Game Over, this needs to be created")
 			return False
 		location = GAME_WORLD[self.current_location]
-		print("You are at " + self.current_location)
+		print("You are at the " + self.current_location)
 		print(location["description"])
 
 		if not location["options"]:
