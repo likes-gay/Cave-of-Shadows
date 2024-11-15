@@ -32,7 +32,7 @@ GAME_WORLD = {
     "Dark Tunnel": {
         "description": (
             "You step into the darkness. The light from your lantern flickers and dances as you walk deeper into the cave. "
-            "It’s eerily quiet except for the sound of your footsteps echoing against the stone walls. Suddenly, the path ahead splits into two."
+            "It's eerily quiet except for the sound of your footsteps echoing against the stone walls. Suddenly, the path ahead splits into two."
         ),
         "options": [
             {"name": "Take the Narrow Path", "next": "Narrow Path"},
@@ -93,7 +93,7 @@ GAME_WORLD = {
             "The battle is about to begin."
         ),
         "options": [
-            {"name": "Use the Relic’s Light to Blind the Creature", "next": "Victory - Success Ending"},
+            {"name": "Use the Relic's Light to Blind the Creature", "next": "Victory - Success Ending"},
             {"name": "Use the Relic to Charge Your Sword with Power", "next": "Creature Attack - Tragic Ending"},
             {"name": "Throw the Relic as a Distraction and Attack", "next": "Creature Attack - Tragic Ending 2"}
         ],
