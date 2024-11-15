@@ -1,11 +1,9 @@
-import json
-import pathlib
-import time
+import json, pathlib
 from io import TextIOWrapper
 from typing import TypedDict
 from inputs import get_valid_input, get_valid_arr_input
 from datetime import datetime
-from colorama import Fore, Style, init
+from colorama import Fore, Style
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()

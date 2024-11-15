@@ -1,3 +1,5 @@
+from colorama import Fore, Style
+
 def get_valid_arr_input(
 		prompt: str,
 		options: list[str],
@@ -8,12 +10,12 @@ def get_valid_arr_input(
 		
 		choice = input(prompt)
 		if not choice.isdigit():
-			print("Invalid input. Please enter a number.")
+			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please enter a number.")
 			continue
 		choice = int(choice)
 
 		if choice < 1 or choice > len(options):
-			print("Invalid input. Please choose a number from the range.")
+			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please choose a number from the range.")
 			continue
 
 		return choice - 1
@@ -24,7 +26,7 @@ def get_valid_bool_input(
 	while True:
 		choice = input(f"{prompt} (yes/no)").lower()
 		if choice not in ["yes", "no", "y", "n"]:
-			print("Invalid input. Please enter \"yes\" or \"no\".")
+			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please enter \"yes\" or \"no\".")
 			continue
 
 		return choice in ["yes", "y"]
@@ -35,7 +37,7 @@ def get_valid_input(
 	while True:
 		choice = input(prompt)
 		if not choice:
-			print("Invalid input. Please enter a valid value.")
+			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please enter a valid value.")
 			continue
 
 		return choice
