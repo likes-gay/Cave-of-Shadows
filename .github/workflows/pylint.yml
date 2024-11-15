@@ -1,0 +1,17 @@
+name: Lint
+
+on:
+  push:
+    paths:
+      - "*.py"
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: psf/black@24.10.0
+        with:
+          options: "--check --verbose"
+          src: "./src"
