@@ -208,7 +208,16 @@ class PlayerData():
         print(f"{Fore.RED}No saved games found.{Style.RESET_ALL}")
 
     def new_game(self):
-        self.game_name = get_valid_input(f"{Fore.CYAN}What will you name this save? {Style.RESET_ALL}")
+        all_game_names = list(map(lambda x: x.get("game_name"), get_save_game_contents()))
+		
+        while True:
+            input_name = get_valid_input(f"{Fore.CYAN}What will you name this save? {Style.RESET_ALL}")
+            if input_name in all_game_names:
+                print(f"{Fore.RED}This name is already taken. Please enter another{Style.RESET_ALL}")
+                continue
+            self.game_name = input_name
+            break
+
         self._save_game()
         print(f"{Fore.GREEN}New game '{self.game_name}' created!{Style.RESET_ALL}")
 
