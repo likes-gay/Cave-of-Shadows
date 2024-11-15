@@ -1,9 +1,13 @@
-import json, pathlib
+import json
+import pathlib
+import time
 from io import TextIOWrapper
 from typing import TypedDict
 from inputs import get_valid_input, get_valid_arr_input
 from datetime import datetime
+from colorama import Fore, Style, init
 
+RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 GAME_WORLD = {
     "Cave Entrance": {
@@ -137,127 +141,137 @@ GAME_WORLD = {
 
 }
 
-
 class PlayerDataType(TypedDict):
-	current_location: str
-	inventory: list[str]
-	game_name: str
-	last_updated: int
+    current_location: str
+    inventory: list[str]
+    game_name: str
+    last_updated: int
 
 def get_save_game_contents(file_pointer: TextIOWrapper | None = None) -> list[PlayerDataType]:
-	try:
-		if file_pointer is None:
-			with open(f"{RESOURCE_PATH}/saved_game.json", "r") as file_pointer:
-				return json.load(file_pointer)
-		
-		file_pointer.seek(0)
-		return json.load(file_pointer)
-	except (FileNotFoundError, json.JSONDecodeError):
-		with open(f"{RESOURCE_PATH}/saved_game.json", "w") as file_pointer:
-			json.dump([], file_pointer)
-		return []
+    try:
+        if file_pointer is None:
+            with open(f"{RESOURCE_PATH}/saved_game.json", "r") as file_pointer:
+                return json.load(file_pointer)
+        
+        file_pointer.seek(0)
+        return json.load(file_pointer)
+    except (FileNotFoundError, json.JSONDecodeError):
+        with open(f"{RESOURCE_PATH}/saved_game.json", "w") as file_pointer:
+            json.dump([], file_pointer)
+        return []
 
 class PlayerData():
-	current_location: str
-	inventory: list[str]
-	game_name: str
-	last_updated: int
+    current_location: str
+    inventory: list[str]
+    game_name: str
+    last_updated: int
 
-	def __init__(self):
-		self.current_location = list(GAME_WORLD.keys())[0]
-		self.inventory = []
-	
-	def play_game(self):
-		if self.current_location not in GAME_WORLD:
-			print("Game Over, this needs to be created")
-			return False
-		location = GAME_WORLD[self.current_location]
-		print("You are at the " + self.current_location)
-		print(location["description"])
+    def __init__(self):
+        self.current_location = list(GAME_WORLD.keys())[0]
+        self.inventory = []
 
-		if not location["options"]:
-			return False
+    def _print_section(self, title: str, content: str, color=Fore.GREEN):
+        print(f"{color}{Style.BRIGHT}\n{'-' * 40}\n{title.upper()}\n{'-' * 40}\n{Style.RESET_ALL}{content}\n")
+    
+    def play_game(self):
+        if self.current_location not in GAME_WORLD:
+            print(f"{Fore.RED}Game Over: This location does not exist.{Style.RESET_ALL}")
+            return False
 
-		choice = get_valid_arr_input("\nWhat do you want to do next?: ", list(map(lambda x: x["name"], location["options"])))
-		self.current_location = location["options"][choice]["next"]
-		self._save_game()
-		return True
+        location = GAME_WORLD[self.current_location]
+        self._print_section(f"Location: {self.current_location}", location["description"], Fore.YELLOW)
 
-	def delete_game(self):
-		all_player_datas = get_save_game_contents()
-		
-		if all_player_datas:
-			game_names = list(map(lambda x: f"{x.get('game_name')} - last updated: {datetime.fromtimestamp(x['last_updated']).strftime('%d-%m-%Y %H:%M:%S')}", all_player_datas))
-			game_names.append("Go back")
-			choicen_save_int = get_valid_arr_input("Choose a game: ", game_names)
-			if choicen_save_int == len(game_names) - 1:
-				return
-			all_player_datas.pop(choicen_save_int)
-			self._save_game(override=all_player_datas)
-			return
-		
-		print("No saved games found.")
+        if not location["options"]:
+            print(f"{Fore.CYAN}This is the end of the path. Thank you for playing!{Style.RESET_ALL}")
+            return False
 
-	def new_game(self):
-		self.game_name = get_valid_input("What will you name this save? ")
-		self._save_game()
+        choice = get_valid_arr_input(
+            f"{Fore.CYAN}What do you want to do next?{Style.RESET_ALL}\n",
+            [f"{Fore.MAGENTA}{opt['name']}{Style.RESET_ALL}" for opt in location["options"]]
+        )
+        self.current_location = location["options"][choice]["next"]
+        self._save_game()
+        return True
 
-	def load_game(self):
-		all_player_datas = get_save_game_contents()
+    def delete_game(self):
+        all_player_datas = get_save_game_contents()
+        if all_player_datas:
+            game_names = list(map(lambda x: f"{x.get('game_name')} - last updated: {datetime.fromtimestamp(x['last_updated']).strftime('%d-%m-%Y %H:%M:%S')}", all_player_datas))
+            game_names.append(f"{Fore.RED}Go back{Style.RESET_ALL}")
+            choicen_save_int = get_valid_arr_input(f"{Fore.CYAN}Choose a game to delete:{Style.RESET_ALL}", game_names)
+            if choicen_save_int == len(game_names) - 1:
+                return
+            all_player_datas.pop(choicen_save_int)
+            self._save_game(override=all_player_datas)
+            print(f"{Fore.GREEN}Game deleted successfully!{Style.RESET_ALL}")
+            return
+        print(f"{Fore.RED}No saved games found.{Style.RESET_ALL}")
 
-		if all_player_datas:
-			choicen_save_int = get_valid_arr_input("Choose a game: ", list(map(lambda x: f"{x['game_name']} - last updated: {datetime.fromtimestamp(x['last_updated']).strftime('%d-%m-%Y %H:%M:%S')}", all_player_datas)))
-			loaded_save = all_player_datas[choicen_save_int]
+    def new_game(self):
+        self.game_name = get_valid_input(f"{Fore.CYAN}What will you name this save? {Style.RESET_ALL}")
+        self._save_game()
+        print(f"{Fore.GREEN}New game '{self.game_name}' created!{Style.RESET_ALL}")
 
-			print(f"{loaded_save['game_name']} has been chosen.")
-			self.current_location = loaded_save["current_location"]
-			self.inventory = loaded_save["inventory"]
-			self.game_name = loaded_save["game_name"]
-			self.last_updated = loaded_save["last_updated"]
-			return True
-		
-		print("No saved games found.")
-		return False
+    def load_game(self):
+        all_player_datas = get_save_game_contents()
+        if all_player_datas:
+            choicen_save_int = get_valid_arr_input(
+                f"{Fore.CYAN}Choose a game to load:{Style.RESET_ALL}\n",
+                [f"{Fore.YELLOW}{x['game_name']} - last updated: {datetime.fromtimestamp(x['last_updated']).strftime('%d-%m-%Y %H:%M:%S')}{Style.RESET_ALL}" for x in all_player_datas]
+            )
+            loaded_save = all_player_datas[choicen_save_int]
 
-	def _save_game(self, override: list[PlayerDataType] | None = None):
-		all_player_datas = get_save_game_contents() if override is None else override
-		
-		if override is None:
-			self.last_updated = datetime.now().timestamp()
-			game_found = False
-			
-			for i, player_data in enumerate(all_player_datas):
-				if player_data["game_name"] == self.game_name:
-					all_player_datas[i] = self.__dict__
-					game_found = True
-					break
-		
-			if not game_found:
-				all_player_datas.append(self.__dict__)
-		
-		with open(f"{RESOURCE_PATH}/saved_game.json", "w") as f:
-			json.dump(all_player_datas, f)
+            print(f"{Fore.GREEN}Loaded game: {loaded_save['game_name']}{Style.RESET_ALL}")
+            self.current_location = loaded_save["current_location"]
+            self.inventory = loaded_save["inventory"]
+            self.game_name = loaded_save["game_name"]
+            self.last_updated = loaded_save["last_updated"]
+            return True
 
+        print(f"{Fore.RED}No saved games found.{Style.RESET_ALL}")
+        return False
 
+    def _save_game(self, override: list[PlayerDataType] | None = None):
+        all_player_datas = get_save_game_contents() if override is None else override
+
+        if override is None:
+            self.last_updated = datetime.now().timestamp()
+            game_found = False
+
+            for i, player_data in enumerate(all_player_datas):
+                if player_data["game_name"] == self.game_name:
+                    all_player_datas[i] = self.__dict__
+                    game_found = True
+                    break
+
+            if not game_found:
+                all_player_datas.append(self.__dict__)
+
+        with open(f"{RESOURCE_PATH}/saved_game.json", "w") as f:
+            json.dump(all_player_datas, f)
 
 if __name__ == "__main__":
-	with open(f"{RESOURCE_PATH}/resources/AdventureSoft_logo.txt", "r") as f:
-		print(f"Welcome to...\n{f.read()}")
-	
-	while True:
-		choice = get_valid_arr_input("Choose an option: ", ["New Game", "Load Game", "Delete Games", "Exit"])
-		player = PlayerData()
+    with open(f"{RESOURCE_PATH}/resources/AdventureSoft_logo.txt", "r") as f:
+        print(f"{Fore.CYAN}Welcome to...\n{Style.BRIGHT}{f.read()}{Style.RESET_ALL}")
 
-		if choice == 0:
-			player.new_game()
-		elif choice == 1 and not player.load_game():
-			continue
-		elif choice == 2:
-			player.delete_game()
-			continue
-		elif choice == 3:
-			exit()
-			
-		while True:
-			if not player.play_game():
-				break
+    while True:
+        choice = get_valid_arr_input(
+            f"{Fore.CYAN}Choose an option:{Style.RESET_ALL}\n",
+            [f"{Fore.GREEN}New Game{Style.RESET_ALL}", f"{Fore.YELLOW}Load Game{Style.RESET_ALL}", f"{Fore.RED}Delete Games{Style.RESET_ALL}", f"{Fore.MAGENTA}Exit{Style.RESET_ALL}"]
+        )
+        player = PlayerData()
+
+        if choice == 0:
+            player.new_game()
+        elif choice == 1 and not player.load_game():
+            continue
+        elif choice == 2:
+            player.delete_game()
+            continue
+        elif choice == 3:
+            print(f"{Fore.GREEN}Thanks for playing! Goodbye.{Style.RESET_ALL}")
+            exit()
+
+        while True:
+            if not player.play_game():
+                break
