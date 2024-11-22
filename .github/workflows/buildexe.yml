@@ -17,8 +17,6 @@ jobs:
 
       - name: Set up Python
         run: uv python install
-        with:
-          enable-cache: true
       
       - name: Install requirements
         run: uv pip install -r requirements.txt
@@ -28,11 +26,10 @@ jobs:
       - name: Build with Pyinstaller
         run: pyinstaller -F src/main.py --add-data src/resources/:./resources/ --name AdventureSoft-Cave-of-Shadows
 
-    - name: Create release
+      - name: Publish
         uses: softprops/action-gh-release@v2.1.0
         with:
-          files: |
-            dist/AdventureSoft-Cave-of-Shadows.exe
-          tag_name: ${{ github.ref_name }}
+          files: dist/AdventureSoft-Cave-of-Shadows.exe
+          tag_name: v${{ github.ref_name }}
           prerelease: false
-          name: ${{ github.ref_name }}
+          name: v${{ github.ref_name }}
