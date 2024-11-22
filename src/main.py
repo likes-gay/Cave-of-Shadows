@@ -1,11 +1,11 @@
-import json, pathlib
+import json, pathlib, shlex
+from sys import exit # This is needed for PyInstaller
 from io import TextIOWrapper
 from typing import TypedDict
-from inputs import get_valid_input, get_valid_arr_input
 from datetime import datetime
+from inputs import get_valid_input, get_valid_arr_input
 from colorama import Fore, Style
 
-RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 GAME_WORLD = {
     "Cave Entrance": {
@@ -94,11 +94,36 @@ GAME_WORLD = {
         "options": [
             {"name": "Use the Relic's Light to Blind the Creature", "next": "Victory - Success Ending"},
             {"name": "Use the Relic to Charge Your Sword with Power", "next": "Creature Attack - Tragic Ending"},
-            {"name": "Throw the Relic as a Distraction and Attack", "next": "Creature Attack - Tragic Ending 2"}
+            {"name": "Throw the Relic as a Distraction and Attack", "next": "Creature Attack - Tragic Ending 2"},
+            {"name": "Throw down all items and equipment and flee the caves", "next": "Escaping Treasure Room"}
         ],
         "items": ["Crystal Relic"]
     },
 
+    "Escaping Treasure Room": {
+        "description": (
+            "You throw everything you have down and quickly remove all your armour, making you lighter and faster.\n"
+            "While the Creature gobbles up your belongings, you sprint your way out of the cave and head back to village."
+        ),
+        "options": [
+            {"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks"},
+            {"name": "Head back to your room in the tavern and rest, hoping the Creature goes away", "next": "The Creature Hungers"}
+        ],
+        "items": []
+    },
+    
+    "The Army Attacks": {
+        "description": (
+            "The Mayor orders an army to be built to defeat the Creature, and you are handed the finest sword in the land by the local blacksmith.\n"
+            "Together you storm the cave, combining manpower and courage to take down the beast and save the village!"
+        ),
+        "options": [
+            {"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks"},
+            {"name": "Head back to your room in the tavern and rest, hoping the Creature goes away", "next": "The Creature Hungers"}
+        ],
+        "items": []
+    },
+    
     "Creature Attack - Tragic Ending": {
         "description": (
             "You fail to control the relic's power. The creature attacks swiftly, and in a heartbeat, your life is taken.\n"
@@ -156,6 +181,20 @@ def get_save_game_contents(file_pointer: TextIOWrapper | None = None) -> list[Pl
             json.dump([], file_pointer)
         return []
 
+def get_game_name_syntax(
+        game_data: list[PlayerDataType],
+        exclude_last_update: bool | None = False
+    ) -> list[str]:
+    arr: list[str] = []
+    for i, game in enumerate(game_data):
+        name = shlex.quote(game["game_name"])
+        last_updated = datetime.fromtimestamp(game["last_updated"]).strftime("%d-%m-%Y %H:%M:%S")
+        if exclude_last_update:
+            arr.append(name)
+            continue
+        arr.append(f"{name} - last updated: {last_updated}")
+    return arr
+
 class PlayerData():
     current_location: str
     inventory: list[str]
@@ -192,9 +231,9 @@ class PlayerData():
     def delete_game(self):
         all_player_datas = get_save_game_contents()
         if all_player_datas:
-            game_names = list(map(lambda x: f"{x.get('game_name')} - last updated: {datetime.fromtimestamp(x['last_updated']).strftime('%d-%m-%Y %H:%M:%S')}", all_player_datas))
+            game_names = get_game_name_syntax(all_player_datas)
             game_names.append(f"{Fore.RED}Go back{Style.RESET_ALL}")
-            choicen_save_int = get_valid_arr_input(f"{Fore.CYAN}Choose a game to delete:{Style.RESET_ALL}", game_names)
+            choicen_save_int = get_valid_arr_input(f"{Fore.CYAN}Choose a game to delete: {Style.RESET_ALL}", game_names)
             if choicen_save_int == len(game_names) - 1:
                 return
             all_player_datas.pop(choicen_save_int)
@@ -205,7 +244,7 @@ class PlayerData():
 
     def new_game(self):
         all_game_names = list(map(lambda x: x.get("game_name"), get_save_game_contents()))
-		
+        
         while True:
             input_name = get_valid_input(f"{Fore.CYAN}What will you name this save? {Style.RESET_ALL}")
             if input_name in all_game_names:
@@ -275,8 +314,7 @@ if __name__ == "__main__":
             continue
         elif choice == 3:
             print(f"{Fore.GREEN}Thanks for playing! Goodbye.{Style.RESET_ALL}")
-            exit()
+            exit(1)
 
-        while True:
-            if not player.play_game():
-                break
+        while player.play_game():
+            pass
