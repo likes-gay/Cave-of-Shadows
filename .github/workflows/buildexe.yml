@@ -19,8 +19,8 @@ jobs:
         uses: astral-sh/setup-uv@v3
 
       - name: Set up Python
-        run: uv python install
-      
+        run: uv python install 3.13
+
       - name: Install requirements
         run: uv pip install -r requirements.txt
         env:
@@ -33,6 +33,6 @@ jobs:
         uses: softprops/action-gh-release@v2.1.0
         with:
           files: dist/AdventureSoft-Cave-of-Shadows.exe
-          tag_name: v${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
           prerelease: false
-          name: v${{ github.ref_name }}
+          name: ${{ github.ref_name }}
