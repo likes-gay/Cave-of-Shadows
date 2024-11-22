@@ -26,8 +26,8 @@ jobs:
         env:
           UV_SYSTEM_PYTHON: 1
       
-      - name: Build with Pyinstaller
-        run: pyinstaller -F src/main.py --add-data src/resources/:./resources/ --name AdventureSoft-Cave-of-Shadows
+      - name: Build with PyInstaller
+        run: pyinstaller -F src/main.py --hidden-import sys --add-data src/resources/:./resources/ --name AdventureSoft-Cave-of-Shadows
 
       - name: Publish
         uses: softprops/action-gh-release@v2.1.0

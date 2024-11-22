@@ -1,10 +1,9 @@
 import json, pathlib, shlex
-from sys import exit # This is needed for PyInstaller
 from io import TextIOWrapper
 from typing import TypedDict
 from datetime import datetime
 from inputs import get_valid_input, get_valid_arr_input
-from colorama import Fore, Style
+from colorama import Fore, Style, init
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 GAME_WORLD = {
@@ -295,6 +294,7 @@ class PlayerData():
 			json.dump(all_player_datas, f)
 
 if __name__ == "__main__":
+	init()
 	with open(f"{RESOURCE_PATH}/resources/AdventureSoft_logo.txt", "r") as f:
 		print(f"{Fore.CYAN}Welcome to...\n{Style.BRIGHT}{f.read()}{Style.RESET_ALL}")
 
