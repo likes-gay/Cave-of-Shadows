@@ -1,2 +1,4 @@
 __pycache__
 saved_game.json
+dist/
+build/
