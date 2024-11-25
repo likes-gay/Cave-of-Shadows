@@ -2,8 +2,8 @@ import json, pathlib, shlex
 from io import TextIOWrapper
 from typing import TypedDict
 from datetime import datetime
-from inputs import get_valid_input, get_valid_arr_input
-from colorama import Fore, Style, init
+from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input
+from colorama import Fore, Style, init, deinit
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 GAME_WORLD = {
@@ -21,11 +21,23 @@ GAME_WORLD = {
 
 	"Village": {
 		"description": (
-			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision.\n"
+			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision. "
 			"The warmth of the tavern greets you as the night deepens. You've decided to relax and live another day."
 		),
-		"options": [],
+		"options": [
+			{"next": "Sleep"},
+		],
 		"items": []
+	},
+
+	"Sleep": {
+		"description": (
+			"You wake up the next morning, feeling refreshed. The village bustles with activity as the sun rises. "
+			"You've decided to explore the cave today."
+		),
+		"options": [
+			{"next": "Cave Entrance"},
+		],
 	},
 
 	"Dark Tunnel": {
@@ -76,7 +88,7 @@ GAME_WORLD = {
 	"Wide Path": {
 		"description": (
 			"You follow the wider path toward a faint glow in the distance. Soon, you find yourself in a large cavernous room.\n"
-			"A glowing chest sits in the center, with strange symbols carved into the walls."
+			"A glowing chest sits in the centre, with strange symbols carved into the walls."
 		),
 		"options": [
 			{"name": "Open the Chest", "next": "Treasure Room - Chest Opened"},
@@ -124,6 +136,7 @@ GAME_WORLD = {
 		"description": (
 			"You fail to control the relic's power. The creature attacks swiftly, and in a heartbeat, your life is taken.\n"
 			"The Cave of Shadows claims another soul."
+			
 		),
 		"options": [],
 		"items": []
@@ -151,7 +164,7 @@ GAME_WORLD = {
 		"description": (
 			"You decide that the dangers of the cave are too great. Retracing your steps, you carefully make your way back to the entrance.\n"
 			"The cool night air greets you as you step outside. Though you leave the cave empty-handed, you feel relieved to be alive.\n"
-			"The treasure, if it truly exists, will remain hidden — for now."
+			"The treasure, if it truly exists, will remain hidden - for now."
 		),
 		"options": [],
 		"items": []
@@ -167,14 +180,14 @@ class PlayerDataType(TypedDict):
 def get_save_game_contents(file_pointer: TextIOWrapper | None = None) -> list[PlayerDataType]:
 	try:
 		if file_pointer is None:
-			with open(f"{RESOURCE_PATH}/saved_game.json", "r") as file_pointer:
-				return json.load(file_pointer)
+			with open(f"{RESOURCE_PATH}/saved_game.json", "r") as f:
+				return json.load(f)
 		
 		file_pointer.seek(0)
 		return json.load(file_pointer)
 	except (FileNotFoundError, json.JSONDecodeError):
-		with open(f"{RESOURCE_PATH}/saved_game.json", "w") as file_pointer:
-			json.dump([], file_pointer)
+		with open(f"{RESOURCE_PATH}/saved_game.json", "w") as f:
+			json.dump([], f)
 		return []
 
 def get_game_name_syntax(
@@ -215,6 +228,14 @@ class PlayerData():
 		if not location["options"]:
 			print(f"{Fore.CYAN}This is the end of the path. Thank you for playing!{Style.RESET_ALL}")
 			return False
+		
+		if len(location["options"]) == 1 and "name" not in location["options"][0]:
+			self.current_location = location["options"][0]["next"]
+			self._save_game()
+
+			get_valid_any_input(f"{Fore.CYAN}Press any key to continue...{Style.RESET_ALL}")
+
+			return True
 
 		choice = get_valid_arr_input(
 			f"{Fore.CYAN}What do you want to do next?{Style.RESET_ALL}\n",
@@ -250,7 +271,7 @@ class PlayerData():
 			break
 
 		self._save_game()
-		print(f"{Fore.GREEN}New game '{self.game_name}' created!{Style.RESET_ALL}")
+		print(f"{Fore.GREEN}New game '{shlex.quote(self.game_name)}' created!{Style.RESET_ALL}")
 
 	def load_game(self):
 		all_player_datas = get_save_game_contents()
@@ -261,11 +282,11 @@ class PlayerData():
 			)
 			loaded_save = all_player_datas[choicen_save_int]
 
-			print(f"{Fore.GREEN}Loaded game: {loaded_save['game_name']}{Style.RESET_ALL}")
 			self.current_location = loaded_save["current_location"]
 			self.inventory = loaded_save["inventory"]
 			self.game_name = loaded_save["game_name"]
 			self.last_updated = loaded_save["last_updated"]
+			print(f"{Fore.GREEN}Loaded game: {shlex.quote(self.game_name)}{Style.RESET_ALL}")
 			return True
 
 		print(f"{Fore.RED}No saved games found.{Style.RESET_ALL}")
@@ -311,6 +332,7 @@ if __name__ == "__main__":
 			continue
 		elif choice == 3:
 			print(f"{Fore.GREEN}Thanks for playing! Goodbye.{Style.RESET_ALL}")
+			deinit()
 			exit(1)
 
 		while player.play_game():

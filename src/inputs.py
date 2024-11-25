@@ -1,4 +1,15 @@
+import sys, tty, termios
 from colorama import Fore, Style
+
+def getch():
+		fd = sys.stdin.fileno()
+		old_settings = termios.tcgetattr(fd)
+		try:
+			tty.setraw(fd)
+			ch = sys.stdin.buffer.raw.read(1)
+		finally:
+			termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+		return ch
 
 def get_valid_arr_input(
 		prompt: str,
@@ -26,10 +37,16 @@ def get_valid_bool_input(
 	while True:
 		choice = input(f"{prompt} (yes/no)").lower()
 		if choice not in ["yes", "no", "y", "n"]:
-			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please enter \"yes\" or \"no\".")
+			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please enter \"yes\"/\"y\" or \"no\"\"n\".")
 			continue
 
 		return choice in ["yes", "y"]
+
+def get_valid_any_input(
+		prompt: str,
+	):
+	print(prompt, end="", flush=True)
+	getch()
 
 def get_valid_input(
 		prompt: str,
