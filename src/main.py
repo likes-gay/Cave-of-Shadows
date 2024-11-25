@@ -91,7 +91,7 @@ GAME_WORLD = {
 			"The battle is about to begin."
 		),
 		"options": [
-			{"name": "Use the Relic's Light to Blind the Creature", "next": "Victory - Success Ending"},
+			{"name": "Use the Relic's Light to Blind the Creature", "next": "Victory - Success Ending 1"},
 			{"name": "Use the Relic to Charge Your Sword with Power", "next": "Creature Attack - Tragic Ending"},
 			{"name": "Throw the Relic as a Distraction and Attack", "next": "Creature Attack - Tragic Ending 2"},
 			{"name": "Throw down all items and equipment and flee the caves", "next": "Escaping Treasure Room"}
@@ -105,21 +105,18 @@ GAME_WORLD = {
 			"While the Creature gobbles up your belongings, you sprint your way out of the cave and head back to village."
 		),
 		"options": [
-			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks"},
+			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks - Victory Ending 2"},
 			{"name": "Head back to your room in the tavern and rest, hoping the Creature goes away", "next": "The Creature Hungers"}
 		],
 		"items": []
 	},
 	
-	"The Army Attacks": {
+	"The Army Attacks - Victory Ending 2": {
 		"description": (
-			"The Mayor orders an army to be built to defeat the Creature, and you are handed the finest sword in the land by the local blacksmith.\n"
-			"Together you storm the cave, combining manpower and courage to take down the beast and save the village!"
+			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination\n"
+			"Everyone strikes the creature, defeating it with ease and cheering in grand victory"
 		),
-		"options": [
-			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks"},
-			{"name": "Head back to your room in the tavern and rest, hoping the Creature goes away", "next": "The Creature Hungers"}
-		],
+		"options": [],
 		"items": []
 	},
 	
@@ -141,7 +138,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
-	"Victory - Success Ending": {
+	"Victory - Success Ending 1": {
 		"description": (
 			"You raise the relic high, blinding the creature. Seizing the opportunity, you strike with your sword, killing it.\n"
 			"The treasure is yours, and you return to the village as a hero."
