@@ -13,8 +13,8 @@ GAME_WORLD = {
 			"Faint whispers seem to call from within. Do you have the courage to step inside?"
 		),
 		"options": [
-			{"name": "Enter the Cave", "next": "Dark Tunnel"},
-			{"name": "Turn Back", "next": "Village"}
+			{"name": "Enter the cave", "next": "Dark Tunnel"},
+			{"name": "Turn back", "next": "Village"}
 		],
 		"items": []
 	},
@@ -22,7 +22,8 @@ GAME_WORLD = {
 	"Village": {
 		"description": (
 			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision. "
-			"The warmth of the tavern greets you as the night deepens. You've decided to relax and live another day."
+			"The warmth of the tavern greets you as the night deepens.\n"
+			"You've decided to relax and live another day."
 		),
 		"options": [
 			{"next": "Sleep"},
@@ -43,11 +44,12 @@ GAME_WORLD = {
 	"Dark Tunnel": {
 		"description": (
 			"You step into the darkness. The light from your lantern flickers and dances as you walk deeper into the cave.\n"
-			"It's eerily quiet except for the sound of your footsteps echoing against the stone walls. Suddenly, the path ahead splits into two."
+			"It's eerily quiet except for the sound of your footsteps echoing against the stone walls.\n"
+			"Suddenly, the path ahead splits into two."
 		),
 		"options": [
-			{"name": "Take the Narrow Path", "next": "Narrow Path"},
-			{"name": "Take the Wide Path", "next": "Wide Path"}
+			{"name": "Take the narrow Path", "next": "Narrow Path"},
+			{"name": "Take the wide Path", "next": "Wide Path"}
 		],
 		"items": []
 	},
@@ -58,15 +60,16 @@ GAME_WORLD = {
 			"After a while, the ground suddenly gives way beneath you."
 		),
 		"options": [
-			{"name": "Try to Climb Out", "next": "Bad Ending - Fall to Doom"},
-			{"name": "Stay Still", "next": "Pit Ledge Escape"}
+			{"name": "Try to climb out", "next": "Bad Ending - Fall to Doom"},
+			{"name": "Stay still", "next": "Pit Ledge Escape"}
 		],
 		"items": []
 	},
 
 	"Bad Ending - Fall to Doom": {
 		"description": (
-			"You struggle to climb, but the walls are too slick. The pit seems endless. Darkness closes in as your strength fades.\n"
+			"You struggle to climb, but the walls are too slick. The pit seems endless.\n"
+			"Darkness closes in as your strength fades.\n"
 			"The cave claims another victim."
 		),
 		"options": [],
@@ -76,11 +79,12 @@ GAME_WORLD = {
 	"Pit Ledge Escape": {
 		"description": (
 			"You pause, letting your eyes adjust to the darkness. Eventually, you spot a narrow ledge along the edge of the pit.\n"
-			"You carefully climb onto it and manage to escape. You find yourself back at the fork in the path, with two choices ahead."
+			"You carefully climb onto it and manage to escape.\n" 
+			"You find yourself back at the fork in the path, with two choices ahead."
 		),
 		"options": [
-			{"name": "Take the Wide Path", "next": "Wide Path"},
-			{"name": "Leave the Cave", "next": "Leave Cave - Neutral Ending"}
+			{"name": "Take the wide path", "next": "Wide Path"},
+			{"name": "Leave the cave", "next": "Leave Cave - Neutral Ending"}
 		],
 		"items": []
 	},
@@ -91,8 +95,8 @@ GAME_WORLD = {
 			"A glowing chest sits in the centre, with strange symbols carved into the walls."
 		),
 		"options": [
-			{"name": "Open the Chest", "next": "Treasure Room - Chest Opened"},
-			{"name": "Leave the Chest", "next": "Leave Cave - Neutral Ending"}
+			{"name": "Open the chest", "next": "Treasure Room - Chest Opened"},
+			{"name": "Leave the chest", "next": "Leave Cave - Neutral Ending"}
 		],
 		"items": []
 	},
@@ -103,9 +107,9 @@ GAME_WORLD = {
 			"The battle is about to begin."
 		),
 		"options": [
-			{"name": "Use the Relic's Light to Blind the Creature", "next": "Victory - Success Ending 1"},
-			{"name": "Use the Relic to Charge Your Sword with Power", "next": "Creature Attack - Tragic Ending"},
-			{"name": "Throw the Relic as a Distraction and Attack", "next": "Creature Attack - Tragic Ending 2"},
+			{"name": "Use the Relic's light to blind the Creature", "next": "Victory - Success Ending 1"},
+			{"name": "Use the Relic to charge your sword with power", "next": "Creature Attack - Tragic Ending"},
+			{"name": "Throw the Relic as a distraction and attack", "next": "Creature Attack - Tragic Ending 2"},
 			{"name": "Throw down all items and equipment and flee the caves", "next": "Escaping Treasure Room"}
 		],
 		"items": ["Crystal Relic"]
@@ -125,7 +129,7 @@ GAME_WORLD = {
 	
 	"The Army Attacks - Victory Ending 2": {
 		"description": (
-			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination\n"
+			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination.\n"
 			"Everyone strikes the creature, defeating it with ease and cheering in grand victory"
 		),
 		"options": [],
@@ -144,8 +148,8 @@ GAME_WORLD = {
 
 	"Creature Attack - Tragic Ending 2": {
 		"description": (
-			"You attempt to throw the relic as a distraction, but the creature ignores it. It charges at you, striking swiftly,\n"
-			"and your life fades in the darkness."
+			"You attempt to throw the relic as a distraction, but the creature ignores it.\n"
+			"It charges at you, striking swiftly,and your life fades in the darkness."
 		),
 		"options": [],
 		"items": []
