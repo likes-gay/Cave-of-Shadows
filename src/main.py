@@ -66,7 +66,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
-	"Bad Ending - Fall to Doom": {
+	"Bad Ending - Falling to your doom": {
 		"description": (
 			"You struggle to climb, but the walls are too slick. The pit seems endless.\n"
 			"Darkness closes in as your strength fades.\n"
@@ -127,7 +127,7 @@ GAME_WORLD = {
 		"items": []
 	},
 	
-	"The Army Attacks - Victory Ending 2": {
+	"The Army Attacks - Victory Ending": {
 		"description": (
 			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination.\n"
 			"Everyone strikes the creature, defeating it with ease and cheering in grand victory"
@@ -146,7 +146,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
-	"Creature Attack - Tragic Ending 2": {
+	"Creature Attack - Tragic Ending": {
 		"description": (
 			"You attempt to throw the relic as a distraction, but the creature ignores it.\n"
 			"It charges at you, striking swiftly,and your life fades in the darkness."
@@ -155,7 +155,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
-	"Victory - Success Ending 1": {
+	"Victory - Success Ending": {
 		"description": (
 			"You raise the relic high, blinding the creature. Seizing the opportunity, you strike with your sword, killing it.\n"
 			"The treasure is yours, and you return to the village as a hero."
@@ -164,7 +164,7 @@ GAME_WORLD = {
 		"items": ["Crystal Relic", "Ancient Treasure"]
 	},
 
-	"Leave Cave - Neutral Ending": {
+	"Back to the village": {
 		"description": (
 			"You decide that the dangers of the cave are too great. Retracing your steps, you carefully make your way back to the entrance.\n"
 			"The cool night air greets you as you step outside. Though you leave the cave empty-handed, you feel relieved to be alive.\n"
@@ -172,6 +172,9 @@ GAME_WORLD = {
 		),
 		"options": [],
 		"items": []
+
+		# Jacob - Make this is a sleep thing not a an ending
+
 	}
 }
 
@@ -222,23 +225,20 @@ class PlayerData():
 		print(f"{color}{Style.BRIGHT}\n{'-' * 40}\n{title.upper()}\n{'-' * 40}\n{Style.RESET_ALL}{content}\n")
 	
 	def play_game(self):
-		if self.current_location not in GAME_WORLD:
-			print(f"{Fore.RED}Game Over: This location does not exist.{Style.RESET_ALL}")
-			return False
-
 		location = GAME_WORLD[self.current_location]
-		self._print_section(f"Location: {self.current_location}", location["description"], Fore.YELLOW)
-
+		
 		if not location["options"]:
-			print(f"{Fore.CYAN}This is the end of the path. Thank you for playing!{Style.RESET_ALL}")
+			self._print_section(f"Ending: {self.current_location}", location["description"], Fore.CYAN)
+			print(f"{Fore.BLUE}This is the end of the path. Thank you for playing!{Style.RESET_ALL}")
 			return False
+		
+		self._print_section(f"Location: {self.current_location}", location["description"], Fore.YELLOW)
 		
 		if len(location["options"]) == 1 and "name" not in location["options"][0]:
 			self.current_location = location["options"][0]["next"]
 			self._save_game()
 
 			get_valid_any_input(f"{Fore.CYAN}Press any key to continue...{Style.RESET_ALL}")
-
 			return True
 
 		choice = get_valid_arr_input(
