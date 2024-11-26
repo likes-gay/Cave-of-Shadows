@@ -191,7 +191,7 @@ def get_save_game_contents(file_pointer: TextIOWrapper | None = None) -> list[Pl
 		if file_pointer is None:
 			with open(f"{RESOURCE_PATH}/saved_game.json", "r") as f:
 				return json.load(f)
-		
+		 
 		file_pointer.seek(0)
 		return json.load(file_pointer)
 	except (FileNotFoundError, json.JSONDecodeError):
