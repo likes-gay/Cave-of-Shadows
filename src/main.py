@@ -170,7 +170,9 @@ GAME_WORLD = {
 			"The cool night air greets you as you step outside. Though you leave the cave empty-handed, you feel relieved to be alive.\n"
 			"The treasure, if it truly exists, will remain hidden - for now."
 		),
-		"options": [],
+		"options": [
+			{"next": "Village"},
+		],
 		"items": []
 
 		# Jacob - Make this is a sleep thing not a an ending
