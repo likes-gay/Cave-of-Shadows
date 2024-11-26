@@ -19,6 +19,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
+
 	"Village": {
 		"description": (
 			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision. "
@@ -31,6 +32,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
+
 	"Sleep": {
 		"description": (
 			"You wake up the next morning, feeling refreshed. The village bustles with activity as the sun rises. "
@@ -40,6 +42,7 @@ GAME_WORLD = {
 			{"next": "Cave Entrance"},
 		],
 	},
+
 
 	"Dark Tunnel": {
 		"description": (
@@ -54,6 +57,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
+
 	"Narrow Path": {
 		"description": (
 			"You crawl through the tight space, your lantern flickering nervously as the walls close in on you.\n"
@@ -66,6 +70,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
+
 	"Bad Ending - Falling to your doom": {
 		"description": (
 			"You struggle to climb, but the walls are too slick. The pit seems endless.\n"
@@ -75,6 +80,7 @@ GAME_WORLD = {
 		"options": [],
 		"items": []
 	},
+
 
 	"Pit Ledge Escape": {
 		"description": (
@@ -89,6 +95,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
+
 	"Wide Path": {
 		"description": (
 			"You follow the wider path toward a faint glow in the distance. Soon, you find yourself in a large cavernous room.\n"
@@ -100,6 +107,7 @@ GAME_WORLD = {
 		],
 		"items": []
 	},
+
 
 	"Treasure Room - Chest Opened": {
 		"description": (
@@ -115,6 +123,7 @@ GAME_WORLD = {
 		"items": ["Crystal Relic"]
 	},
 
+
 	"Escaping Treasure Room": {
 		"description": (
 			"You throw everything you have down and quickly remove all your armour, making you lighter and faster.\n"
@@ -127,6 +136,7 @@ GAME_WORLD = {
 		"items": []
 	},
 	
+
 	"The Army Attacks - Victory Ending": {
 		"description": (
 			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination.\n"
@@ -135,6 +145,7 @@ GAME_WORLD = {
 		"options": [],
 		"items": []
 	},
+
 	
 	"Creature Attack - Tragic Ending": {
 		"description": (
@@ -146,6 +157,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
+
 	"Creature Attack - Tragic Ending": {
 		"description": (
 			"You attempt to throw the relic as a distraction, but the creature ignores it.\n"
@@ -155,6 +167,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
+
 	"Victory - Success Ending": {
 		"description": (
 			"You raise the relic high, blinding the creature. Seizing the opportunity, you strike with your sword, killing it.\n"
@@ -163,6 +176,7 @@ GAME_WORLD = {
 		"options": [],
 		"items": ["Crystal Relic", "Ancient Treasure"]
 	},
+
 
 	"Back to the village": {
 		"description": (
@@ -174,11 +188,9 @@ GAME_WORLD = {
 			{"next": "Village"},
 		],
 		"items": []
-
-		# Jacob - Make this is a sleep thing not a an ending
-
 	}
 }
+
 
 class PlayerDataType(TypedDict):
 	current_location: str
