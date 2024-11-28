@@ -1,4 +1,5 @@
-__pycache__
 saved_game.json
-dist/
-build/
+__pycache__
+dist
+build
+.venv
