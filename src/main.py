@@ -115,9 +115,9 @@ GAME_WORLD = {
 			"The battle is about to begin."
 		),
 		"options": [
-			{"name": "Use the Relic's light to blind the Creature", "next": "Victory - Success Ending 1"},
+			{"name": "Use the Relic's light to blind the Creature", "next": "Victory - Success Ending "},
 			{"name": "Use the Relic to charge your sword with power", "next": "Creature Attack - Tragic Ending"},
-			{"name": "Throw the Relic as a distraction and attack", "next": "Creature Attack - Tragic Ending 2"},
+			{"name": "Throw the Relic as a distraction and attack", "next": "Creature Attack - Tragic Ending"},
 			{"name": "Throw down all items and equipment and flee the caves", "next": "Escaping Treasure Room"}
 		],
 		"items": ["Crystal Relic"]
@@ -130,7 +130,7 @@ GAME_WORLD = {
 			"While the Creature gobbles up your belongings, you sprint your way out of the cave and head back to village."
 		),
 		"options": [
-			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks - Victory Ending 2"},
+			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks - Victory Ending"},
 			{"name": "Head back to your room in the tavern and rest, hoping the Creature goes away", "next": "The Creature Hungers"}
 		],
 		"items": []
@@ -168,7 +168,7 @@ GAME_WORLD = {
 	},
 
 
-	"Victory - Success Ending": {
+	"Creature Defeated - Success Ending": {
 		"description": (
 			"You raise the relic high, blinding the creature. Seizing the opportunity, you strike with your sword, killing it.\n"
 			"The treasure is yours, and you return to the village as a hero."
