@@ -1,15 +1,9 @@
-import sys, tty, termios
 from colorama import Fore, Style
 
-def getch():
-		fd = sys.stdin.fileno()
-		old_settings = termios.tcgetattr(fd)
-		try:
-			tty.setraw(fd)
-			ch = sys.stdin.buffer.raw.read(1)
-		finally:
-			termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-		return ch
+try:
+	from msvcrt import getch
+except ImportError:
+	from getch import getch
 
 def get_valid_arr_input(
 		prompt: str,

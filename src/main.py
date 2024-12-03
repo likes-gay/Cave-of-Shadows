@@ -1,4 +1,4 @@
-import json, pathlib, shlex
+import json, pathlib, shlex, sys, os
 from io import TextIOWrapper
 from typing import TypedDict
 from datetime import datetime
@@ -6,11 +6,14 @@ from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input
 from colorama import Fore, Style, init, deinit
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
+SAVE_FILE_PATH = (pathlib.Path(sys._MEIPASS) if getattr(sys, "frozen", False) else RESOURCE_PATH) / "saved_game.json"
+
 GAME_WORLD = {
 	"Cave Entrance": {
 		"description": (
-			"You stand at the entrance of the Cave of Shadows. The air is thick with the scent of damp earth and decay.\n"
-			"Faint whispers seem to call from within. Do you have the courage to step inside?"
+			"You are the town's protector, staying in the local tavern. After hearing rumors of a mysterious person-eating monster within the nearby caves, you decide to investigate.\n"
+			"You stand at the entrance of the Cave of Shadows with your armour, sword and lantern. The air is thick with the scent of damp earth and decay.\n"
+			"You can't see much past where you stand, and the only sound is your own thumping heartbeat. Do you have the courage to step inside?"
 		),
 		"options": [
 			{"name": "Enter the cave", "next": "Dark Tunnel"},
@@ -22,8 +25,8 @@ GAME_WORLD = {
 
 	"Village": {
 		"description": (
-			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is quiet, and you reflect on your decision. "
-			"The warmth of the tavern greets you as the night deepens.\n"
+			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is a calm one, as you return to the cozy tavern\n"
+			"The warmth of the lights fills you with joy, as you head to your room and lay down.\n"
 			"You've decided to relax and live another day."
 		),
 		"options": [
@@ -35,8 +38,9 @@ GAME_WORLD = {
 
 	"Sleep": {
 		"description": (
-			"You wake up the next morning, feeling refreshed. The village bustles with activity as the sun rises. "
-			"You've decided to explore the cave today."
+			"You wake up the next morning, feeling refreshed. The village bustles with activity as the sun rises."
+			"You help yourself to a hearty breakfast and multiple cups of coffee, fueling you with energy for the day."
+			"You should probably check out those rumors...."
 		),
 		"options": [
 			{"next": "Cave Entrance"},
@@ -46,7 +50,7 @@ GAME_WORLD = {
 
 	"Dark Tunnel": {
 		"description": (
-			"You step into the darkness. The light from your lantern flickers and dances as you walk deeper into the cave.\n"
+			"You step into the darkness. The light from your lantern dances on the walls as you walk deeper into the cave.\n"
 			"It's eerily quiet except for the sound of your footsteps echoing against the stone walls.\n"
 			"Suddenly, the path ahead splits into two."
 		),
@@ -61,11 +65,12 @@ GAME_WORLD = {
 	"Narrow Path": {
 		"description": (
 			"You crawl through the tight space, your lantern flickering nervously as the walls close in on you.\n"
-			"After a while, the ground suddenly gives way beneath you."
+			"The flame flickers and disappears in an instant, with just the moonlight to help you see.\n"
+			"After a while, the ground suddenly starts to split beneath you."
 		),
 		"options": [
 			{"name": "Try to climb out", "next": "Bad Ending - Fall to Doom"},
-			{"name": "Stay still", "next": "Pit Ledge Escape"}
+			{"name": "Shuffle along to the other side of the tight space", "next": "Pit Ledge Escape"}
 		],
 		"items": []
 	},
@@ -73,9 +78,9 @@ GAME_WORLD = {
 
 	"Bad Ending - Falling to your doom": {
 		"description": (
-			"You struggle to climb, but the walls are too slick. The pit seems endless.\n"
-			"Darkness closes in as your strength fades.\n"
-			"The cave claims another victim."
+			"You struggle to climb, but the walls are covered in a mysterious ooze.\n"
+			"As the floor becomes less and less, you have nothing to stand on and fall downwards.\n"
+			"The cave claims another helpess victim, the rumors forever a mystery..."
 		),
 		"options": [],
 		"items": []
@@ -84,9 +89,9 @@ GAME_WORLD = {
 
 	"Pit Ledge Escape": {
 		"description": (
-			"You pause, letting your eyes adjust to the darkness. Eventually, you spot a narrow ledge along the edge of the pit.\n"
-			"You carefully climb onto it and manage to escape.\n" 
-			"You find yourself back at the fork in the path, with two choices ahead."
+			"Being careful with your footing, you shuffle along and find a path on the otherside.\n"
+			"Feeling curious, you follow it and it leads you... back to where you started!\n" 
+			"You should probably investigate those rumors, maybe the other path has some clues?"
 		),
 		"options": [
 			{"name": "Take the wide path", "next": "Wide Path"},
@@ -99,7 +104,8 @@ GAME_WORLD = {
 	"Wide Path": {
 		"description": (
 			"You follow the wider path toward a faint glow in the distance. Soon, you find yourself in a large cavernous room.\n"
-			"A glowing chest sits in the centre, with strange symbols carved into the walls."
+			"A glowing chest sits in the centre, with strange symbols carved into the walls.\n"
+			"Should you check it for rare treasures or leave it incase it's a trap?"
 		),
 		"options": [
 			{"name": "Open the chest", "next": "Treasure Room - Chest Opened"},
@@ -112,11 +118,12 @@ GAME_WORLD = {
 	"Treasure Room - Chest Opened": {
 		"description": (
 			"You open the chest and find a crystal relic pulsing with energy. As you grasp it, a monstrous creature emerges from the shadows.\n"
-			"The battle is about to begin."
+			"Your heart quickens, your muscles tense up and you brace yourself, for the battle is about to begin.\n"
+			"What will you do against the giant, villaineous Creature??"
 		),
 		"options": [
 			{"name": "Use the Relic's light to blind the Creature", "next": "Victory - Success Ending "},
-			{"name": "Use the Relic to charge your sword with power", "next": "Creature Attack - Tragic Ending"},
+			{"name": "Combime the Relic with your sword to greatly increase its power", "next": "Creature Attack - Tragic Ending"},
 			{"name": "Throw the Relic as a distraction and attack", "next": "Creature Attack - Tragic Ending"},
 			{"name": "Throw down all items and equipment and flee the caves", "next": "Escaping Treasure Room"}
 		],
@@ -127,7 +134,8 @@ GAME_WORLD = {
 	"Escaping Treasure Room": {
 		"description": (
 			"You throw everything you have down and quickly remove all your armour, making you lighter and faster.\n"
-			"While the Creature gobbles up your belongings, you sprint your way out of the cave and head back to village."
+			"While the Creature gobbles up your belongings, you sprint your way out of the cave and head back to village.\n"
+			"You could tell the Mayor about this, but would he believe you? Maybe you should just rest it off..."
 		),
 		"options": [
 			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks - Victory Ending"},
@@ -140,7 +148,8 @@ GAME_WORLD = {
 	"The Army Attacks - Victory Ending": {
 		"description": (
 			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination.\n"
-			"Everyone strikes the creature, defeating it with ease and cheering in grand victory"
+			"Swords slash into flesh, the Creature roars and your blood fills with fury!"
+			"Together, you all charge the creature and strike it down, claiming an easy victory and 50 percent off your stay at the local tavern."
 		),
 		"options": [],
 		"items": []
@@ -149,9 +158,9 @@ GAME_WORLD = {
 	
 	"Creature Attack - Tragic Ending": {
 		"description": (
-			"You fail to control the relic's power. The creature attacks swiftly, and in a heartbeat, your life is taken.\n"
-			"The Cave of Shadows claims another soul."
-			
+			"You try combining the two but... it failed?\n"
+			"Whilst you stand confused, the Creature seizes the opportunity and swallows you whole!\n"
+			"With noone alive to tell about the Creature, the town reminds none the wiser about it lurking within the cave.."
 		),
 		"options": [],
 		"items": []
@@ -161,17 +170,17 @@ GAME_WORLD = {
 	"Creature Attack - Tragic Ending": {
 		"description": (
 			"You attempt to throw the relic as a distraction, but the creature ignores it.\n"
-			"It charges at you, striking swiftly,and your life fades in the darkness."
+			"With your sword bouncing right off of its scaly skin, it defeats you in one fell swoop.\n"
+			"So the rumor was true! Although I doubt you can tell anyone about it now..."
 		),
 		"options": [],
 		"items": []
 	},
-l
-
 	"Creature Defeated - Success Ending": {
 		"description": (
-			"You raise the relic high, blinding the creature. Seizing the opportunity, you strike with your sword, killing it.\n"
-			"The treasure is yours, and you return to the village as a hero."
+			"You raise the relic high, the moonlight reflecting off it and into the Creature's eyes, blinding it.\n"
+			"Seizing the opportunity, you strike with your sword, killing it.\n"
+			"Thanks to your heroic venture, the Creature shall be fed no more and the village is safe! (selling the Relic made you pretty rich too!)"
 		),
 		"options": [],
 		"items": ["Crystal Relic", "Ancient Treasure"]
@@ -201,13 +210,13 @@ class PlayerDataType(TypedDict):
 def get_save_game_contents(file_pointer: TextIOWrapper | None = None) -> list[PlayerDataType]:
 	try:
 		if file_pointer is None:
-			with open(f"{RESOURCE_PATH}/saved_game.json", "r") as f:
+			with open(SAVE_FILE_PATH, "r") as f:
 				return json.load(f)
 		 
 		file_pointer.seek(0)
 		return json.load(file_pointer)
 	except (FileNotFoundError, json.JSONDecodeError):
-		with open(f"{RESOURCE_PATH}/saved_game.json", "w") as f:
+		with open(SAVE_FILE_PATH, "w") as f:
 			json.dump([], f)
 		return []
 
@@ -326,13 +335,13 @@ class PlayerData():
 			if not game_found:
 				all_player_datas.append(self.__dict__)
 
-		with open(f"{RESOURCE_PATH}/saved_game.json", "w") as f:
+		with open(SAVE_FILE_PATH, "w") as f:
 			json.dump(all_player_datas, f)
 
 if __name__ == "__main__":
 	init()
-	with open(f"{RESOURCE_PATH}/resources/AdventureSoft_logo.txt", "r") as f:
-		print(f"{Fore.CYAN}Welcome to...\n{Style.BRIGHT}{f.read()}{Style.RESET_ALL}")
+	with open(RESOURCE_PATH / "resources/AdventureSoft_logo.txt", "r") as f:
+		print(f"Welcome to...\n{Fore.CYAN}{Style.BRIGHT}{f.read()}{Style.RESET_ALL}")
 
 	while True:
 		choice = get_valid_arr_input(
