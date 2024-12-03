@@ -2,3 +2,4 @@ saved_game.json
 __pycache__
 dist
 build
+*.spec

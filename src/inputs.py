@@ -1,8 +1,9 @@
 from colorama import Fore, Style
+from platform import system
 
-try:
+if system() == "Windows":
 	from msvcrt import getch
-except ImportError:
+else:
 	from getch import getch
 
 def get_valid_arr_input(

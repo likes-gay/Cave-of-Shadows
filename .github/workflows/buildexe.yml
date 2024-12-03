@@ -15,17 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          cache: "pip"
+          python-version: 3.13
 
       - name: Install requirements
-        run: pip install -r requirements.txt
-        continue-on-error: true
+        run: uv pip install --system -r requirements.txt
 
       - name: Build with PyInstaller
-        run: pyinstaller -F src/main.py --hidden-import sys --add-data src/resources/:./resources/ --name Cave-of-Shadows-AdventureSoft
+        run: uv run pyinstaller -F src/main.py --hidden-import sys --add-data src/resources/:./resources/ --name Cave-of-Shadows-AdventureSoft
 
       - name: Publish
         uses: softprops/action-gh-release@v2.1.0
