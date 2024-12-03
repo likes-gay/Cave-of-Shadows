@@ -6,7 +6,11 @@ from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input
 from colorama import Fore, Style, init, deinit
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
-SAVE_FILE_PATH = (pathlib.Path(sys._MEIPASS) if getattr(sys, "frozen", False) else RESOURCE_PATH) / "saved_game.json"
+
+if getattr(sys, "frozen", False):
+	SAVE_FILE_PATH = RESOURCE_PATH / "saved_game.json"
+else:
+	SAVE_FILE_PATH = pathlib.Path(sys.executable).parent / "saved_game.json"
 
 GAME_WORLD = {
 	"Cave Entrance": {
