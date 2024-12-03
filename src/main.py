@@ -166,7 +166,7 @@ GAME_WORLD = {
 		"options": [],
 		"items": []
 	},
-
+l
 
 	"Creature Defeated - Success Ending": {
 		"description": (
