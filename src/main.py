@@ -8,9 +8,11 @@ from colorama import Fore, Style, init, deinit
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 
 if getattr(sys, "frozen", False):
-	SAVE_FILE_PATH = RESOURCE_PATH / "saved_game.json"
-else:
 	SAVE_FILE_PATH = pathlib.Path(sys.executable).parent / "saved_game.json"
+else:
+	SAVE_FILE_PATH = RESOURCE_PATH / "saved_game.json"
+
+print(SAVE_FILE_PATH)
 
 GAME_WORLD = {
 	"Cave Entrance": {
