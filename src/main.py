@@ -69,7 +69,7 @@ GAME_WORLD = {
 			"After a while, the ground suddenly starts to split beneath you."
 		),
 		"options": [
-			{"name": "Try to climb out", "next": "Bad Ending - Fall to Doom"},
+			{"name": "Try to climb out", "next": "Bad Ending - Falling to your Doom"},
 			{"name": "Shuffle along to the other side of the tight space", "next": "Pit Ledge Escape"}
 		],
 		"items": []
