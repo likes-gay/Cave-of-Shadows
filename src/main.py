@@ -25,7 +25,7 @@ GAME_WORLD = {
 
 	"Village": {
 		"description": (
-			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is a calm one, as you return to the cozy tavern\n"
+			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is a calm one, as you return to the cozy tavern.\n"
 			"The warmth of the lights fills you with joy, as you head to your room and lay down.\n"
 			"You've decided to relax and live another day."
 		),
@@ -38,8 +38,8 @@ GAME_WORLD = {
 
 	"Sleep": {
 		"description": (
-			"You wake up the next morning, feeling refreshed. The village bustles with activity as the sun rises."
-			"You help yourself to a hearty breakfast and multiple cups of coffee, fueling you with energy for the day."
+			"You wake up the next morning, feeling refreshed. The village bustles with activity as the sun rises.\n"
+			"You help yourself to a hearty breakfast and multiple cups of coffee, fueling you with energy for the day.\n"
 			"You should probably check out those rumors...."
 		),
 		"options": [
@@ -148,7 +148,7 @@ GAME_WORLD = {
 	"The Army Attacks - Victory Ending": {
 		"description": (
 			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination.\n"
-			"Swords slash into flesh, the Creature roars and your blood fills with fury!"
+			"Swords slash into flesh, the Creature roars and your blood fills with fury!\n"
 			"Together, you all charge the creature and strike it down, claiming an easy victory and 50 percent off your stay at the local tavern."
 		),
 		"options": [],
@@ -160,7 +160,7 @@ GAME_WORLD = {
 		"description": (
 			"You try combining the two but... it failed?\n"
 			"Whilst you stand confused, the Creature seizes the opportunity and swallows you whole!\n"
-			"With noone alive to tell about the Creature, the town reminds none the wiser about it lurking within the cave.."
+			"With noone alive to tell about the Creature, the town reminds none the wiser about it lurking within the cave..."
 		),
 		"options": [],
 		"items": []

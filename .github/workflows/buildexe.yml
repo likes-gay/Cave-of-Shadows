@@ -22,7 +22,8 @@ jobs:
 
       - name: Install requirements
         run: pip install -r requirements.txt
-      
+        continue-on-error: true
+
       - name: Build with PyInstaller
         run: pyinstaller -F src/main.py --hidden-import sys --add-data src/resources/:./resources/ --name Cave-of-Shadows-AdventureSoft
 
