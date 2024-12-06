@@ -364,7 +364,7 @@ if __name__ == "__main__":
 		elif choice == 3:
 			print(f"{Fore.GREEN}Thanks for playing! Goodbye.{Style.RESET_ALL}")
 			deinit()
-			exit(1)
+			break
 
 		while player.play_game():
 			pass
