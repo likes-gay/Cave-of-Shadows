@@ -1,10 +1,30 @@
+import time
 from colorama import Fore, Style
 from platform import system
 
 if system() == "Windows":
-	from msvcrt import getch
-else:
+	from msvcrt import getch, kbhit
+else: # Linux
 	from getch import getch
+	import sys, tty, termios
+
+def ignore_input_time(seconds_to_ignore: float):
+	if system() == "Windows":
+		start_time = time.time()
+		while time.time() - start_time < seconds_to_ignore:
+			while kbhit():
+				getch()
+			time.sleep(0.1)
+		return
+
+	# Linux
+	fd = sys.stdin.fileno()
+	old_settings = termios.tcgetattr(fd)
+	try:
+		tty.setcbreak(sys.stdin.fileno())
+		time.sleep(seconds_to_ignore)
+	finally:
+		termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
 def get_valid_arr_input(
 		prompt: str,

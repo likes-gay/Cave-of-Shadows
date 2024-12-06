@@ -1,8 +1,8 @@
-import json, pathlib, shlex, sys, os
+import json, pathlib, shlex, sys, time
 from io import TextIOWrapper
 from typing import TypedDict
 from datetime import datetime
-from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input
+from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input, ignore_input_time
 from colorama import Fore, Style, init, deinit
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
@@ -339,10 +339,19 @@ class PlayerData():
 		with open(SAVE_FILE_PATH, "w") as f:
 			json.dump(all_player_datas, f)
 
+def slow_print(text: str, delay: float = .1):
+	for char in text.split("\n"):
+		print(char, flush=True)
+		ignore_input_time(delay)
+	print()
+
 if __name__ == "__main__":
 	init()
-	with open(RESOURCE_PATH / "resources/AdventureSoft_logo.txt", "r") as f:
-		print(f"AdventureSoft presents...\n{Fore.CYAN}{Style.BRIGHT}{f.read()}{Style.RESET_ALL}")
+	with open(RESOURCE_PATH / "resources/AdventureSoft_presents.txt", "r") as f:
+		slow_print(f"{Fore.CYAN}{Style.BRIGHT}{f.read()}{Style.RESET_ALL}", delay=.25)
+
+	with open(RESOURCE_PATH / "resources/CaveofShadows_logo.txt", "r") as f:
+		slow_print(f"{Fore.MAGENTA}{f.read()}{Style.RESET_ALL}")
 
 	while True:
 		choice = get_valid_arr_input(
@@ -360,6 +369,10 @@ if __name__ == "__main__":
 			continue
 		elif choice == 3:
 			print(f"{Fore.GREEN}Thanks for playing! Goodbye.{Style.RESET_ALL}")
+			WAITING_TIME = 1
+			for i in range(WAITING_TIME):
+				print(f"{Fore.RED}Exiting in {WAITING_TIME - i}s...{Style.RESET_ALL}", end="\r")
+				ignore_input_time(1)
 			deinit()
 			break
 
