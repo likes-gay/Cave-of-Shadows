@@ -52,7 +52,7 @@ GAME_WORLD = {
 	},
 
 
-	"Dark Tunnel": {
+	"Cave Entrance": {
 		"description": (
 			"You step into the darkness. The light from your lantern dances on the walls as you walk deeper into the cave.\n"
 			"It's eerily quiet except for the sound of your footsteps echoing against the stone walls.\n"
@@ -73,14 +73,14 @@ GAME_WORLD = {
 			"After a while, the ground suddenly starts to split beneath you."
 		),
 		"options": [
-			{"name": "Try to climb out", "next": "Bad Ending - Falling to your Doom"},
+			{"name": "Try to climb out", "next": "Tragic Ending 1 - Falling to your doom!"},
 			{"name": "Shuffle along to the other side of the tight space", "next": "Pit Ledge Escape"}
 		],
 		"items": []
 	},
 
 
-	"Bad Ending - Falling to your doom": {
+	"Tragic Ending 1 - Falling to your doom!": {
 		"description": (
 			"You struggle to climb, but the walls are covered in a mysterious ooze.\n"
 			"As the floor becomes less and less, you have nothing to stand on and fall downwards.\n"
@@ -99,7 +99,7 @@ GAME_WORLD = {
 		),
 		"options": [
 			{"name": "Take the wide path", "next": "Wide Path"},
-			{"name": "Leave the cave", "next": "Leave Cave - Neutral Ending"}
+			{"name": "Leave the cave", "next": "Neutral Ending - Safe and sound!"}
 		],
 		"items": []
 	},
@@ -113,7 +113,7 @@ GAME_WORLD = {
 		),
 		"options": [
 			{"name": "Open the chest", "next": "Treasure Room - Chest Opened"},
-			{"name": "Leave the chest", "next": "Leave Cave - Neutral Ending"}
+			{"name": "Leave the chest", "next": "Neutral Ending - Safe and sound!"}
 		],
 		"items": []
 	},
@@ -126,30 +126,30 @@ GAME_WORLD = {
 			"What will you do against the giant, villaineous Creature??"
 		),
 		"options": [
-			{"name": "Use the Relic's light to blind the Creature", "next": "Victory - Success Ending "},
-			{"name": "Combime the Relic with your sword to greatly increase its power", "next": "Creature Attack - Tragic Ending"},
-			{"name": "Throw the Relic as a distraction and attack", "next": "Creature Attack - Tragic Ending"},
-			{"name": "Throw down all items and equipment and flee the caves", "next": "Escaping Treasure Room"}
+			{"name": "Use the Relic's light to blind the Creature", "next": "Good Ending 2 - Blinded by the light!"},
+			{"name": "Combime the Relic with your sword to greatly increase its power", "next": "Tragic Ending 2 - Snack for the Creature!"},
+			{"name": "Throw the Relic as a distraction and attack", "next": "Tragic Ending 3 - Killed by the Creature!"},
+			{"name": "Throw down all items and equipment and flee the caves", "next": "Escaping the Treasure Room"}
 		],
 		"items": ["Crystal Relic"]
 	},
 
 
-	"Escaping Treasure Room": {
+	"Escaping the Treasure Room": {
 		"description": (
 			"You throw everything you have down and quickly remove all your armour, making you lighter and faster.\n"
 			"While the Creature gobbles up your belongings, you sprint your way out of the cave and head back to village.\n"
 			"You could tell the Mayor about this, but would he believe you? Maybe you should just rest it off..."
 		),
 		"options": [
-			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "The Army Attacks - Victory Ending"},
-			{"name": "Head back to your room in the tavern and rest, hoping the Creature goes away", "next": "The Creature Hungers"}
+			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "Good Ending 2 - Victory!"},
+			{"name": "Head back to your room in the tavern and rest, hoping the Creature goes away", "next": "Neutral Ending - Safe and sound!"}
 		],
 		"items": []
 	},
 	
 
-	"The Army Attacks - Victory Ending": {
+	"Good Ending 1 - Victory!": {
 		"description": (
 			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination.\n"
 			"Swords slash into flesh, the Creature roars and your blood fills with fury!\n"
@@ -160,7 +160,7 @@ GAME_WORLD = {
 	},
 
 	
-	"Creature Attack - Tragic Ending": {
+	"Tragic Ending 1 - Snack for the Creature!": {
 		"description": (
 			"You try combining the two but... it failed?\n"
 			"Whilst you stand confused, the Creature seizes the opportunity and swallows you whole!\n"
@@ -171,7 +171,7 @@ GAME_WORLD = {
 	},
 
 
-	"Creature Attack - Tragic Ending": {
+	"Tragic Ending 2 - Killed by the Creature!": {
 		"description": (
 			"You attempt to throw the relic as a distraction, but the creature ignores it.\n"
 			"With your sword bouncing right off of its scaly skin, it defeats you in one fell swoop.\n"
@@ -180,7 +180,7 @@ GAME_WORLD = {
 		"options": [],
 		"items": []
 	},
-	"Creature Defeated - Success Ending": {
+	"Good Ending 2 - Blinded by the light!": {
 		"description": (
 			"You raise the relic high, the moonlight reflecting off it and into the Creature's eyes, blinding it.\n"
 			"Seizing the opportunity, you strike with your sword, killing it.\n"
@@ -191,15 +191,13 @@ GAME_WORLD = {
 	},
 
 
-	"Back to the village": {
+	"Neutral Ending - Safe and sound!": {
 		"description": (
 			"You decide that the dangers of the cave are too great. Retracing your steps, you carefully make your way back to the entrance.\n"
 			"The cool night air greets you as you step outside. Though you leave the cave empty-handed, you feel relieved to be alive.\n"
-			"The treasure, if it truly exists, will remain hidden - for now."
+			"The rumors shall stay as just rumors - for now."
 		),
-		"options": [
-			{"next": "Village"},
-		],
+		"options": [],
 		"items": []
 	}
 }
