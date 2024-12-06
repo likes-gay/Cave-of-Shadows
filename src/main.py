@@ -80,17 +80,6 @@ GAME_WORLD = {
 	},
 
 
-	"Tragic Ending 1 - Falling to your doom!": {
-		"description": (
-			"You struggle to climb, but the walls are covered in a mysterious ooze.\n"
-			"As the floor becomes less and less, you have nothing to stand on and fall downwards.\n"
-			"The cave claims another helpess victim, the rumors forever a mystery..."
-		),
-		"options": [],
-		"items": []
-	},
-
-
 	"Pit Ledge Escape": {
 		"description": (
 			"Being careful with your footing, you shuffle along and find a path on the otherside.\n"
@@ -170,7 +159,17 @@ GAME_WORLD = {
 	},
 
 	
-	"Tragic Ending 1 - Snack for the Creature!": {
+	"Tragic Ending 1 - Falling to your doom!": {
+		"description": (
+			"You struggle to climb, but the walls are covered in a mysterious ooze.\n"
+			"As the floor becomes less and less, you have nothing to stand on and fall downwards.\n"
+			"The cave claims another helpess victim, the rumors forever a mystery..."
+		),
+		"options": [],
+		"items": []
+	},
+	
+	"Tragic Ending 2 - Snack for the Creature!": {
 		"description": (
 			"You try combining the two but... it failed?\n"
 			"Whilst you stand confused, the Creature seizes the opportunity and swallows you whole!\n"
@@ -180,7 +179,7 @@ GAME_WORLD = {
 		"items": []
 	},
 
-	"Tragic Ending 2 - Killed by the Creature!": {
+	"Tragic Ending 3 - Killed by the Creature!": {
 		"description": (
 			"You attempt to throw the relic as a distraction, but the creature ignores it.\n"
 			"With your sword bouncing right off of its scaly skin, it defeats you in one fell swoop.\n"
