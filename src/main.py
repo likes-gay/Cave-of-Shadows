@@ -342,7 +342,7 @@ class PlayerData():
 if __name__ == "__main__":
 	init()
 	with open(RESOURCE_PATH / "resources/AdventureSoft_logo.txt", "r") as f:
-		print(f"Welcome to...\n{Fore.CYAN}{Style.BRIGHT}{f.read()}{Style.RESET_ALL}")
+		print(f"AdventureSoft presents...\n{Fore.CYAN}{Style.BRIGHT}{f.read()}{Style.RESET_ALL}")
 
 	while True:
 		choice = get_valid_arr_input(
