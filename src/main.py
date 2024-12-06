@@ -159,6 +159,16 @@ GAME_WORLD = {
 		"items": []
 	},
 
+	"Good Ending 2 - Blinded by the light!": {
+		"description": (
+			"You raise the relic high, the moonlight reflecting off it and into the Creature's eyes, blinding it.\n"
+			"Seizing the opportunity, you strike with your sword, killing it.\n"
+			"Thanks to your heroic venture, the Creature shall be fed no more and the village is safe! (selling the Relic made you pretty rich too!)"
+		),
+		"options": [],
+		"items": ["Crystal Relic", "Ancient Treasure"]
+	},
+
 	
 	"Tragic Ending 1 - Snack for the Creature!": {
 		"description": (
@@ -170,7 +180,6 @@ GAME_WORLD = {
 		"items": []
 	},
 
-
 	"Tragic Ending 2 - Killed by the Creature!": {
 		"description": (
 			"You attempt to throw the relic as a distraction, but the creature ignores it.\n"
@@ -179,15 +188,6 @@ GAME_WORLD = {
 		),
 		"options": [],
 		"items": []
-	},
-	"Good Ending 2 - Blinded by the light!": {
-		"description": (
-			"You raise the relic high, the moonlight reflecting off it and into the Creature's eyes, blinding it.\n"
-			"Seizing the opportunity, you strike with your sword, killing it.\n"
-			"Thanks to your heroic venture, the Creature shall be fed no more and the village is safe! (selling the Relic made you pretty rich too!)"
-		),
-		"options": [],
-		"items": ["Crystal Relic", "Ancient Treasure"]
 	},
 
 
