@@ -20,8 +20,8 @@ GAME_WORLD = {
 			"You can't see much past where you stand, and the only sound is your own thumping heartbeat. Do you have the courage to step inside?"
 		),
 		"options": [
-			{"name": "Enter the cave", "next": "Dark Tunnel"},
-			{"name": "Turn back", "next": "Village"}
+			{"name": "Enter the cave, hopefully uncovering the rumors", "next": "Dark Tunnel"},
+			{"name": "Turn back, you need another day to prepare", "next": "Village"}
 		],
 		"items": []
 	},
@@ -59,8 +59,8 @@ GAME_WORLD = {
 			"Suddenly, the path ahead splits into two."
 		),
 		"options": [
-			{"name": "Take the narrow Path", "next": "Narrow Path"},
-			{"name": "Take the wide Path", "next": "Wide Path"}
+			{"name": "Take the freightening narrow path", "next": "Narrow Path"},
+			{"name": "Take the menacing wide path", "next": "Wide Path"}
 		],
 		"items": []
 	},
@@ -73,7 +73,7 @@ GAME_WORLD = {
 			"After a while, the ground suddenly starts to split beneath you."
 		),
 		"options": [
-			{"name": "Try to climb out", "next": "Tragic Ending 1 - Falling to your doom!"},
+			{"name": "Attempt to climb out and escape", "next": "Tragic Ending 1 - Falling to your doom!"},
 			{"name": "Shuffle along to the other side of the tight space", "next": "Pit Ledge Escape"}
 		],
 		"items": []
@@ -82,13 +82,13 @@ GAME_WORLD = {
 
 	"Pit Ledge Escape": {
 		"description": (
-			"Being careful with your footing, you shuffle along and find a path on the otherside.\n"
+			"Being careful with your footing, you shuffle along and find a path on the other side.\n"
 			"Feeling curious, you follow it and it leads you... back to where you started!\n" 
 			"You should probably investigate those rumors, maybe the other path has some clues?"
 		),
 		"options": [
-			{"name": "Take the wide path", "next": "Wide Path"},
-			{"name": "Leave the cave", "next": "Neutral Ending - Safe and sound!"}
+			{"name": "Take the wide path this time", "next": "Wide Path"},
+			{"name": "Leave the cave, those rumors probably aren't true anyway", "next": "Neutral Ending - Safe and sound!"}
 		],
 		"items": []
 	},
@@ -101,8 +101,8 @@ GAME_WORLD = {
 			"Should you check it for rare treasures or leave it incase it's a trap?"
 		),
 		"options": [
-			{"name": "Open the chest", "next": "Treasure Room - Chest Opened"},
-			{"name": "Leave the chest", "next": "Neutral Ending - Safe and sound!"}
+			{"name": "Open the chest, maybe it has something powerful!", "next": "Treasure Room - Chest Opened"},
+			{"name": "Leave the cave, it could be deadly...", "next": "Neutral Ending - Safe and sound!"}
 		],
 		"items": []
 	},
@@ -112,11 +112,11 @@ GAME_WORLD = {
 		"description": (
 			"You open the chest and find a crystal relic pulsing with energy. As you grasp it, a monstrous creature emerges from the shadows.\n"
 			"Your heart quickens, your muscles tense up and you brace yourself, for the battle is about to begin.\n"
-			"What will you do against the giant, villaineous Creature??"
+			"What will you do against the giant, villainous Creature??"
 		),
 		"options": [
 			{"name": "Use the Relic's light to blind the Creature", "next": "Good Ending 2 - Blinded by the light!"},
-			{"name": "Combime the Relic with your sword to greatly increase its power", "next": "Tragic Ending 2 - Snack for the Creature!"},
+			{"name": "Combine the Relic with your sword to greatly increase its power", "next": "Tragic Ending 2 - Snack for the Creature!"},
 			{"name": "Throw the Relic as a distraction and attack", "next": "Tragic Ending 3 - Killed by the Creature!"},
 			{"name": "Throw down all items and equipment and flee the caves", "next": "Escaping the Treasure Room"}
 		],
@@ -163,7 +163,7 @@ GAME_WORLD = {
 		"description": (
 			"You struggle to climb, but the walls are covered in a mysterious ooze.\n"
 			"As the floor becomes less and less, you have nothing to stand on and fall downwards.\n"
-			"The cave claims another helpess victim, the rumors forever a mystery..."
+			"The cave claims another helpless victim, the rumors forever a mystery..."
 		),
 		"options": [],
 		"items": []
