@@ -25,28 +25,6 @@ GAME_WORLD = {
 		],
 	},
 
-	"Village": {
-		"description": (
-			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is a calm one, as you return to the cozy tavern.\n"
-			"The warmth of the lights fills you with joy, as you head to your room and lay down.\n"
-			"You've decided to relax and live another day."
-		),
-		"options": [
-			{"next": "Sleep"},
-		],
-	},
-
-	"Sleep": {
-		"description": (
-			"You wake up the next morning, feeling refreshed. The village bustles with activity as the sun rises.\n"
-			"You help yourself to a hearty breakfast and multiple cups of coffee, fueling you with energy for the day.\n"
-			"You should probably check out those rumors...."
-		),
-		"options": [
-			{"next": "Cave Entrance"},
-		],
-	},
-
 	"Narrow Path": {
 		"description": (
 			"You crawl through the tight space, your lantern flickering nervously as the walls close in on you.\n"
