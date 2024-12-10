@@ -23,6 +23,9 @@ jobs:
       - name: Install requirements
         run: uv pip install --system -r requirements.txt
 
+      - name: Run tests
+        run: uv run pytest src/test_main.py
+
       - name: Build with PyInstaller
         run: uv run pyinstaller -F src/main.py --hidden-import sys --add-data src/resources/:./resources/ --name Cave-of-Shadows-AdventureSoft
 

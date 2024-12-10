@@ -1,3 +1,4 @@
 colorama
 pyinstaller
+pytest
 getch; sys_platform == "linux"
