@@ -15,17 +15,15 @@ else:
 GAME_WORLD = {
 	"Cave Entrance": {
 		"description": (
-			"You are the town's protector, staying in the local tavern. After hearing rumors of a mysterious person-eating monster within the nearby caves, you decide to investigate.\n"
-			"You stand at the entrance of the Cave of Shadows with your armour, sword and lantern. The air is thick with the scent of damp earth and decay.\n"
-			"You can't see much past where you stand, and the only sound is your own thumping heartbeat. Do you have the courage to step inside?"
+			"You step into the darkness. The light from your lantern dances on the walls as you walk deeper into the cave.\n"
+			"It's eerily quiet except for the sound of your footsteps echoing against the stone walls.\n"
+			"Suddenly, the path ahead splits into two."
 		),
 		"options": [
-			{"name": "Enter the cave, hopefully uncovering the rumors", "next": "Dark Tunnel"},
-			{"name": "Turn back, you need another day to prepare", "next": "Village"}
+			{"name": "Take the freightening narrow path", "next": "Narrow Path"},
+			{"name": "Take the menacing wide path", "next": "Wide Path"}
 		],
-		"items": []
 	},
-
 
 	"Village": {
 		"description": (
@@ -36,9 +34,7 @@ GAME_WORLD = {
 		"options": [
 			{"next": "Sleep"},
 		],
-		"items": []
 	},
-
 
 	"Sleep": {
 		"description": (
@@ -51,21 +47,6 @@ GAME_WORLD = {
 		],
 	},
 
-
-	"Cave Entrance": {
-		"description": (
-			"You step into the darkness. The light from your lantern dances on the walls as you walk deeper into the cave.\n"
-			"It's eerily quiet except for the sound of your footsteps echoing against the stone walls.\n"
-			"Suddenly, the path ahead splits into two."
-		),
-		"options": [
-			{"name": "Take the freightening narrow path", "next": "Narrow Path"},
-			{"name": "Take the menacing wide path", "next": "Wide Path"}
-		],
-		"items": []
-	},
-
-
 	"Narrow Path": {
 		"description": (
 			"You crawl through the tight space, your lantern flickering nervously as the walls close in on you.\n"
@@ -76,9 +57,7 @@ GAME_WORLD = {
 			{"name": "Attempt to climb out and escape", "next": "Tragic Ending 1 - Falling to your doom!"},
 			{"name": "Shuffle along to the other side of the tight space", "next": "Pit Ledge Escape"}
 		],
-		"items": []
 	},
-
 
 	"Pit Ledge Escape": {
 		"description": (
@@ -90,9 +69,7 @@ GAME_WORLD = {
 			{"name": "Take the wide path this time", "next": "Wide Path"},
 			{"name": "Leave the cave, those rumors probably aren't true anyway", "next": "Neutral Ending - Safe and sound!"}
 		],
-		"items": []
 	},
-
 
 	"Wide Path": {
 		"description": (
@@ -104,9 +81,7 @@ GAME_WORLD = {
 			{"name": "Open the chest, maybe it has something powerful!", "next": "Treasure Room - Chest Opened"},
 			{"name": "Leave the cave, it could be deadly...", "next": "Neutral Ending - Safe and sound!"}
 		],
-		"items": []
 	},
-
 
 	"Treasure Room - Chest Opened": {
 		"description": (
@@ -120,9 +95,7 @@ GAME_WORLD = {
 			{"name": "Throw the Relic as a distraction and attack", "next": "Tragic Ending 3 - Killed by the Creature!"},
 			{"name": "Throw down all items and equipment and flee the caves", "next": "Escaping the Treasure Room"}
 		],
-		"items": ["Crystal Relic"]
 	},
-
 
 	"Escaping the Treasure Room": {
 		"description": (
@@ -131,21 +104,18 @@ GAME_WORLD = {
 			"You could tell the Mayor about this, but would he believe you? Maybe you should just rest it off..."
 		),
 		"options": [
-			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "Good Ending 2 - Victory!"},
+			{"name": "Inform the village Mayor about the Creature and prepare an army to defeat it", "next": "Good Ending 1 - Victory!"},
 			{"name": "Head back to your room in the tavern and rest, hoping the Creature goes away", "next": "Neutral Ending - Safe and sound!"}
 		],
-		"items": []
 	},
 	
-
 	"Good Ending 1 - Victory!": {
 		"description": (
 			"You and your grand army storm towards the cave, weapons drawn and battle cries filling you with determination.\n"
 			"Swords slash into flesh, the Creature roars and your blood fills with fury!\n"
 			"Together, you all charge the creature and strike it down, claiming an easy victory and 50 percent off your stay at the local tavern."
 		),
-		"options": [],
-		"items": []
+		"options": []
 	},
 
 	"Good Ending 2 - Blinded by the light!": {
@@ -153,12 +123,10 @@ GAME_WORLD = {
 			"You raise the relic high, the moonlight reflecting off it and into the Creature's eyes, blinding it.\n"
 			"Seizing the opportunity, you strike with your sword, killing it.\n"
 			"Thanks to your heroic venture, the Creature shall be fed no more and the village is safe! (selling the Relic made you pretty rich too!)"
-		),
-		"options": [],
-		"items": ["Crystal Relic", "Ancient Treasure"]
+		), # Check teams for my final suggestions
+		"options": []
 	},
 
-	
 	"Tragic Ending 1 - Falling to your doom!": {
 		"description": (
 			"You struggle to climb, but the walls are covered in a mysterious ooze.\n"
@@ -166,7 +134,6 @@ GAME_WORLD = {
 			"The cave claims another helpless victim, the rumors forever a mystery..."
 		),
 		"options": [],
-		"items": []
 	},
 	
 	"Tragic Ending 2 - Snack for the Creature!": {
@@ -176,7 +143,6 @@ GAME_WORLD = {
 			"With noone alive to tell about the Creature, the town reminds none the wiser about it lurking within the cave..."
 		),
 		"options": [],
-		"items": []
 	},
 
 	"Tragic Ending 3 - Killed by the Creature!": {
@@ -186,9 +152,7 @@ GAME_WORLD = {
 			"So the rumor was true! Although I doubt you can tell anyone about it now..."
 		),
 		"options": [],
-		"items": []
 	},
-
 
 	"Neutral Ending - Safe and sound!": {
 		"description": (
@@ -196,15 +160,13 @@ GAME_WORLD = {
 			"The cool night air greets you as you step outside. Though you leave the cave empty-handed, you feel relieved to be alive.\n"
 			"The rumors shall stay as just rumors - for now."
 		),
-		"options": [],
-		"items": []
+		"options": []
 	}
 }
 
 
 class PlayerDataType(TypedDict):
 	current_location: str
-	inventory: list[str]
 	game_name: str
 	last_updated: int
 
@@ -226,7 +188,7 @@ def get_game_name_syntax(
 		exclude_last_update: bool | None = False
 	) -> list[str]:
 	arr: list[str] = []
-	for i, game in enumerate(game_data):
+	for game in game_data:
 		name = shlex.quote(game["game_name"])
 		last_updated = datetime.fromtimestamp(game["last_updated"]).strftime("%d-%m-%Y %H:%M:%S")
 		if exclude_last_update:
@@ -237,13 +199,11 @@ def get_game_name_syntax(
 
 class PlayerData():
 	current_location: str
-	inventory: list[str]
 	game_name: str
 	last_updated: int
 
 	def __init__(self):
 		self.current_location = list(GAME_WORLD.keys())[0]
-		self.inventory = []
 
 	def _print_section(self, title: str, content: str, color=Fore.GREEN):
 		print(f"{color}{Style.BRIGHT}\n{'-' * 40}\n{title.upper()}\n{'-' * 40}\n{Style.RESET_ALL}{content}\n")
@@ -253,7 +213,7 @@ class PlayerData():
 		
 		if not location["options"]:
 			self._print_section(f"Ending: {self.current_location}", location["description"], Fore.CYAN)
-			print(f"{Fore.BLUE}This is the end of the path. Thank you for playing!{Style.RESET_ALL}")
+			print(f"{Fore.BLUE}This is the end of the game. Thank you for playing!{Style.RESET_ALL}")
 			return False
 		
 		self._print_section(f"Location: {self.current_location}", location["description"], Fore.YELLOW)
@@ -278,7 +238,7 @@ class PlayerData():
 		if all_player_datas:
 			game_names = get_game_name_syntax(all_player_datas)
 			game_names.append(f"{Fore.RED}Go back{Style.RESET_ALL}")
-			choicen_save_int = get_valid_arr_input(f"{Fore.CYAN}Choose a game to delete: {Style.RESET_ALL}", game_names)
+			choicen_save_int = get_valid_arr_input(f"{Fore.CYAN}Choose a save to delete: {Style.RESET_ALL}", game_names)
 			if choicen_save_int == len(game_names) - 1:
 				return
 			all_player_datas.pop(choicen_save_int)
@@ -293,7 +253,7 @@ class PlayerData():
 		while True:
 			input_name = get_valid_input(f"{Fore.CYAN}What will you name this save? {Style.RESET_ALL}")
 			if input_name in all_game_names:
-				print(f"{Fore.RED}This name is already taken. Please enter another{Style.RESET_ALL}")
+				print(f"{Fore.RED}This name is already taken, please enter another.{Style.RESET_ALL}")
 				continue
 			self.game_name = input_name
 			break
@@ -311,7 +271,6 @@ class PlayerData():
 			loaded_save = all_player_datas[choicen_save_int]
 
 			self.current_location = loaded_save["current_location"]
-			self.inventory = loaded_save["inventory"]
 			self.game_name = loaded_save["game_name"]
 			self.last_updated = loaded_save["last_updated"]
 			print(f"{Fore.GREEN}Loaded game: {shlex.quote(self.game_name)}{Style.RESET_ALL}")
@@ -355,8 +314,8 @@ if __name__ == "__main__":
 
 	while True:
 		choice = get_valid_arr_input(
-			f"{Fore.CYAN}Choose an option:{Style.RESET_ALL}\n",
-			[f"{Fore.GREEN}New Game{Style.RESET_ALL}", f"{Fore.YELLOW}Load Game{Style.RESET_ALL}", f"{Fore.RED}Delete Games{Style.RESET_ALL}", f"{Fore.MAGENTA}Exit{Style.RESET_ALL}"]
+			f"{Fore.CYAN}Please choose an option:{Style.RESET_ALL}\n",
+			[f"{Fore.GREEN}Start a new game{Style.RESET_ALL}", f"{Fore.YELLOW}Load a saved game{Style.RESET_ALL}", f"{Fore.RED}Delete a saved game{Style.RESET_ALL}", f"{Fore.MAGENTA}Exit the game{Style.RESET_ALL}"]
 		)
 		player = PlayerData()
 
@@ -368,7 +327,7 @@ if __name__ == "__main__":
 			player.delete_game()
 			continue
 		elif choice == 3:
-			print(f"{Fore.GREEN}Thanks for playing! Goodbye.{Style.RESET_ALL}")
+			print(f"{Fore.GREEN}Thank your for playing Cave of Shadows! Goodbye.{Style.RESET_ALL}")
 			WAITING_TIME = 1
 			for i in range(WAITING_TIME):
 				print(f"{Fore.RED}Exiting in {WAITING_TIME - i}s...{Style.RESET_ALL}", end="\r")
