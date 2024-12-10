@@ -23,8 +23,13 @@ jobs:
       - name: Install requirements
         run: uv pip install --system -r requirements.txt
 
-      - name: Run tests
-        run: uv run pytest src/test_main.py
+      - name: Run all tests except invalid nexts
+        run: uv run pytest src/test_main.py --deselect src/test_main.py::test_no_invalid_nexts
+        continue-on-error: true
+      
+        # We only want it to fail when there's something that could crash the game
+      - name: Run invalid nexts test
+        run: uv run pytest src/test_main.py::test_no_invalid_nexts
 
       - name: Build with PyInstaller
         run: uv run pyinstaller -F src/main.py --hidden-import sys --add-data src/resources/:./resources/ --name Cave-of-Shadows-AdventureSoft
