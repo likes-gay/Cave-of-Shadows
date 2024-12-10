@@ -42,7 +42,7 @@ GAME_WORLD = {
 	"Village": {
 		"description": (
 			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is a calm one, as you return to the cozy tavern.\n"
-			"The warmth of the lights fills you with joy, as you head to your room and lay down.\n"
+			"The warmth of the lights fill you with joy, as you head to your room and lay down.\n"
 			"You've decided to relax and live another day."
 		),
 		"options": [
