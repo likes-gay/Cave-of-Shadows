@@ -15,13 +15,48 @@ else:
 GAME_WORLD = {
 	"Cave Entrance": {
 		"description": (
+			"You are the town's protector, staying in the local tavern. After hearing rumors of a mysterious person-eating monster within the nearby caves, you decide to investigate.\n"
+			"You stand at the entrance of the Cave of Shadows with your armour, sword and lantern. The air is thick with the scent of damp earth and decay.\n"
+			"You can't see much past where you stand, and the only sound is your own thumping heartbeat. Do you have the courage to step inside?"
+		),
+		"options": [
+			{"name": "Enter the cave, hopefully uncovering the rumors", "next": "Dark Tunnel"},
+			{"name": "Turn back, you need another day to prepare", "next": "Village"}
+		],
+		"items": []
+	},
+
+	"Dark Tunnel": {
+		"description": (
 			"You step into the darkness. The light from your lantern dances on the walls as you walk deeper into the cave.\n"
 			"It's eerily quiet except for the sound of your footsteps echoing against the stone walls.\n"
 			"Suddenly, the path ahead splits into two."
 		),
 		"options": [
-			{"name": "Take the freightening narrow path", "next": "Narrow Path"},
-			{"name": "Take the menacing wide path", "next": "Wide Path"}
+			{"name": "Take the narrow Path", "next": "Narrow Path"},
+			{"name": "Take the wide Path", "next": "Wide Path"}
+		],
+		"items": []
+	},
+
+	"Village": {
+		"description": (
+			"You turn away from the dark cave, choosing to play it safe. The walk back to the village is a calm one, as you return to the cozy tavern.\n"
+			"The warmth of the lights fills you with joy, as you head to your room and lay down.\n"
+			"You've decided to relax and live another day."
+		),
+		"options": [
+			{"next": "Sleep"},
+		],
+	},
+	"Sleep": {
+		"description": (
+			"You wake up the next morning, feeling refreshed. The village bustles with activity as the sun rises.\n"
+			"You help yourself to a hearty breakfast and multiple cups of coffee, fueling you with energy for the day.\n"
+			"You should probably check out those rumors...."
+		),
+		"options": [
+			{"next": "Cave Entrance"},
 		],
 	},
 
