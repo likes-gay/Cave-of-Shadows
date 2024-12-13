@@ -35,7 +35,7 @@ jobs:
         run: uv run pyinstaller -F src/main.py --hidden-import sys --add-data src/resources/:./resources/ --name Cave-of-Shadows-AdventureSoft
 
       - name: Publish
-        uses: softprops/action-gh-release@v2.2.0
+        uses: softprops/action-gh-release@v2.1.0
         with:
           files: dist/Cave-of-Shadows-AdventureSoft.exe
           tag_name: v${{ github.run_number }}
