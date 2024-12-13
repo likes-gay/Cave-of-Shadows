@@ -1,9 +1,9 @@
-import json, pathlib, shlex, sys, time
+import json, pathlib, shlex, sys
 from io import TextIOWrapper
 from typing import TypedDict
 from datetime import datetime
-from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input, ignore_input_time
 from colorama import Fore, Style, init, deinit
+from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input, ignore_input_time
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 
@@ -136,7 +136,7 @@ GAME_WORLD = {
 			"You raise the relic high, the moonlight reflecting off it and into the Creature's eyes, blinding it.\n"
 			"Seizing the opportunity, you strike with your sword, killing it.\n"
 			"Thanks to your heroic venture, the Creature shall be fed no more and the village is safe! (selling the Relic made you pretty rich too!)"
-		), # Check teams for my final suggestions
+		),
 		"options": []
 	},
 
@@ -203,7 +203,7 @@ def get_game_name_syntax(
 	arr: list[str] = []
 	for game in game_data:
 		name = shlex.quote(game["game_name"])
-		last_updated = datetime.fromtimestamp(game["last_updated"]).strftime("%d-%m-%Y %H:%M:%S")
+		last_updated = datetime.fromtimestamp(game["last_updated"]).strftime("%d-%m-%Y %H:%M.%S")
 		if exclude_last_update:
 			arr.append(name)
 			continue
@@ -238,9 +238,12 @@ class PlayerData():
 			get_valid_any_input(f"{Fore.CYAN}Press any key to continue...{Style.RESET_ALL}")
 			return True
 
+		colours_arr = [Fore.GREEN, Fore.YELLOW, Fore.RED, Fore.BLUE, Fore.CYAN]
+		choices_arr = [f"{colours_arr[i % len(colours_arr)]}{opt['name']}{Style.RESET_ALL}" for i, opt in enumerate(location["options"])]
+
 		choice = get_valid_arr_input(
 			f"{Fore.CYAN}What do you want to do next?{Style.RESET_ALL}\n",
-			[f"{Fore.MAGENTA}{opt['name']}{Style.RESET_ALL}" for opt in location["options"]]
+			choices_arr
 		)
 		self.current_location = location["options"][choice]["next"]
 		self._save_game()
@@ -261,7 +264,7 @@ class PlayerData():
 		print(f"{Fore.RED}No saved games found.{Style.RESET_ALL}")
 
 	def new_game(self):
-		all_game_names = list(map(lambda x: x.get("game_name"), get_save_game_contents()))
+		all_game_names = [x.get("game_name") for x in get_save_game_contents()]
 		
 		while True:
 			input_name = get_valid_input(f"{Fore.CYAN}What will you name this save? {Style.RESET_ALL}")
@@ -276,10 +279,11 @@ class PlayerData():
 
 	def load_game(self):
 		all_player_datas = get_save_game_contents()
+
 		if all_player_datas:
 			choicen_save_int = get_valid_arr_input(
 				f"{Fore.CYAN}Choose a game to load:{Style.RESET_ALL}\n",
-				[f"{Fore.YELLOW}{x['game_name']} - last updated: {datetime.fromtimestamp(x['last_updated']).strftime('%d-%m-%Y %H:%M:%S')}{Style.RESET_ALL}" for x in all_player_datas]
+				get_game_name_syntax(all_player_datas)
 			)
 			loaded_save = all_player_datas[choicen_save_int]
 
@@ -297,15 +301,12 @@ class PlayerData():
 
 		if override is None:
 			self.last_updated = datetime.now().timestamp()
-			game_found = False
 
-			for i, player_data in enumerate(all_player_datas):
-				if player_data["game_name"] == self.game_name:
-					all_player_datas[i] = self.__dict__
-					game_found = True
-					break
-
-			if not game_found:
+			game = [i for i, player_data in enumerate(all_player_datas) if player_data["game_name"] == self.game_name]
+			print(game)
+			if game:
+				all_player_datas[all_player_datas.index(game[0])] = self.__dict__
+			else:
 				all_player_datas.append(self.__dict__)
 
 		with open(SAVE_FILE_PATH, "w") as f:
@@ -323,12 +324,12 @@ if __name__ == "__main__":
 		slow_print(f"{Fore.CYAN}{Style.BRIGHT}{f.read()}{Style.RESET_ALL}", delay=.25)
 
 	with open(RESOURCE_PATH / "resources/CaveofShadows_logo.txt", "r") as f:
-		slow_print(f"{Fore.MAGENTA}{f.read()}{Style.RESET_ALL}")
+		slow_print(f"{Fore.BLUE}{f.read()}{Style.RESET_ALL}")
 
 	while True:
 		choice = get_valid_arr_input(
 			f"{Fore.CYAN}Please choose an option:{Style.RESET_ALL}\n",
-			[f"{Fore.GREEN}Start a new game{Style.RESET_ALL}", f"{Fore.YELLOW}Load a saved game{Style.RESET_ALL}", f"{Fore.RED}Delete a saved game{Style.RESET_ALL}", f"{Fore.MAGENTA}Exit the game{Style.RESET_ALL}"]
+			[f"{Fore.GREEN}Start a new game{Style.RESET_ALL}", f"{Fore.YELLOW}Load a saved game{Style.RESET_ALL}", f"{Fore.RED}Delete a saved game{Style.RESET_ALL}", f"{Fore.BLUE}Exit the game{Style.RESET_ALL}"]
 		)
 		player = PlayerData()
 
@@ -340,8 +341,8 @@ if __name__ == "__main__":
 			player.delete_game()
 			continue
 		elif choice == 3:
-			print(f"{Fore.GREEN}Thank your for playing Cave of Shadows! Goodbye.{Style.RESET_ALL}")
-			WAITING_TIME = 1
+			print(f"{Fore.GREEN}Thank you for playing Cave of Shadows! Goodbye.{Style.RESET_ALL}")
+			WAITING_TIME = 2
 			for i in range(WAITING_TIME):
 				print(f"{Fore.RED}Exiting in {WAITING_TIME - i}s...{Style.RESET_ALL}", end="\r")
 				ignore_input_time(1)
