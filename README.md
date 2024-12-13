@@ -29,29 +29,29 @@ Download and run the exe file from the [releases page](https://github.com/likes-
 Checklist of fixes for easiest-hardest
 
 Easiest to Fix:
-Grammatical errors
-Text display issues
-Dialogue clarity improvements
-Color-blind friendly options
-Restart options
+Grammatical errors,
+Text display issues,
+Dialogue clarity improvements,
+Color-blind friendly options,
+Restart options,
 
 Moderately Difficult:
-Fixing option selection bugs
-Saving/loading mechanics improvements
-Enhancing dialogue variety
-Adding more narrative depth
-Improving user interface details
+Fixing option selection bugs,
+Saving/loading mechanics improvements,
+Enhancing dialogue variety,
+Adding more narrative depth,
+Improving user interface details,
 
 More Challenging to Implement:
-Extending game length
-Adding more endings
-Introducing skill checks and puzzles
-Implementing a leveling system
-Creating more detailed character development
-Adding an inventory system
+Extending game length,
+Adding more endings,
+Introducing skill checks and puzzles,
+Implementing a leveling system,
+Creating more detailed character development,
+Adding an inventory system,
 
 Most Complex:
-Developing multiple new endings
-Creating a comprehensive choice variety system
-Designing complex narrative branching
+Developing multiple new endings,
+Creating a comprehensive choice variety system,
+Designing complex narrative branching,
 Integrating a fully functional pause and resume game mechanic
