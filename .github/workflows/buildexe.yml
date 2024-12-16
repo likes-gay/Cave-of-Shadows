@@ -24,8 +24,19 @@ jobs:
       - name: Set up Python
         run: uv python install 3.12
 
+      - name: Setup venv
+        run: uv venv
+
+      - name: Activate venv Windows
+        if: matrix.os == 'windows-latest'
+        run: .venv\Scripts\activate
+
+      - name: Activate venv Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: source .venv/bin/activate
+
       - name: Install requirements
-        run: uv pip install --system -r requirements.txt
+        run: uv pip install -r requirements.txt
 
       - name: Run all tests except invalid nexts
         run: uv run pytest src/test_main.py --deselect src/test_main.py::test_no_invalid_nexts
