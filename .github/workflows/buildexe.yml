@@ -44,7 +44,7 @@ jobs:
           path: dist/Cave-of-Shadows-AdventureSoft.*
 
   publish:
-    needs: build-py-to-exe
+    needs: build-py-to-bin
     runs-on: ubuntu-latest
 
     steps:
