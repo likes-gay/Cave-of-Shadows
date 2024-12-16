@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Cave-of-Shadows-AdventureSoft-${{ matrix.os }}
-          path: dist/Cave-of-Shadows-AdventureSoft.*
+          path: dist/Cave-of-Shadows-AdventureSoft*
 
   publish:
     needs: build-py-to-bin
