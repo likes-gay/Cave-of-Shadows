@@ -47,7 +47,7 @@ jobs:
         run: uv run pyinstaller -F src/main.py --hidden-import sys --add-data src/resources/:./resources/ --name Cave-of-Shadows-AdventureSoft
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Cave-of-Shadows-AdventureSoft-${{ matrix.os }}
           path: dist/Cave-of-Shadows-AdventureSoft*
