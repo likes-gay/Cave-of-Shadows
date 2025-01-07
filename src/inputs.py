@@ -1,15 +1,14 @@
-import time
+import time, os, sys
 from colorama import Fore, Style
-from platform import system
-
-if system() == "Windows":
+os.waitstatus_to_exitcode
+if sys.builtin_module_names == "nt": # Windows
 	from msvcrt import getch, kbhit
 else: # Linux
 	from getch import getch
 	import sys, tty, termios
 
 def ignore_input_time(seconds_to_ignore: float):
-	if system() == "Windows":
+	if os.name == "nt": # Windows:
 		start_time = time.time()
 		while time.time() - start_time < seconds_to_ignore:
 			while kbhit():
