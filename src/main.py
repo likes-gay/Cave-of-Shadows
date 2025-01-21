@@ -326,7 +326,7 @@ class PlayerData():
 			loaded_save = all_player_datas[choicen_save_int]
 
 			for key, value in loaded_save.items():
-				setattr(self, key, value)
+				self.__dict__[key] = value
 			print(f"{Fore.GREEN}Loaded game: {shlex.quote(self.game_name)}{Style.RESET_ALL}")
 			
 			self._set_typewriter_option()
@@ -334,7 +334,6 @@ class PlayerData():
 			is_location_an_ending = not GAME_WORLD[self.current_location]["options"]
 
 			if is_location_an_ending and get_valid_bool_input("Do you want to load the point before you died?"):
-				self.previous_location = self.current_location
 				self.current_location = self.previous_location
 				print(f"{Fore.GREEN}Game loaded with previous location successfully!{Style.RESET_ALL}")
 			return True
@@ -344,13 +343,16 @@ class PlayerData():
 
 	
 	def __setattr__(self, name, value):
-		if name == "current_location":
+		if name == "current_location" and value != self.current_location:
 			self.previous_location = self.current_location
 		
 		self.__dict__[name] = value
 		
 		if name != "last_updated":
 			self._save_game()
+	
+	def __getattr__(self, name):
+		return self.__dict__[name]
 
 	def _save_game(self, override: list[PlayerDataType] | None = None):
 		if override is not None:
