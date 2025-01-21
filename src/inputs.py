@@ -1,4 +1,4 @@
-import time
+import time, select
 from colorama import Fore, Style
 from platform import system
 
@@ -7,6 +7,16 @@ if system() == "Windows":
 else: # Linux
 	from getch import getch
 	import sys, tty, termios
+
+def getch():
+    old_settings = termios.tcgetattr(sys.stdin)
+    try:
+        tty.setcbreak(sys.stdin.fileno())
+        if select.select([sys.stdin], [], [], 0.1)[0]:
+            return sys.stdin.read(1)
+        return
+    finally:
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
 
 def ignore_input_time(seconds_to_ignore: float):
 	if system() == "Windows":
@@ -27,20 +37,22 @@ def ignore_input_time(seconds_to_ignore: float):
 		termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
 def get_valid_arr_input(
-		prompt: str,
-		options: list[str],
+	prompt: str,
+	options: list[str],
 	) -> int:
 	while True:
 		for i, option in enumerate(options, start=1):
 			print(f"{i}. {option}")
-		
+	
 		choice = input(prompt)
 		if not choice.isdigit():
+			print("\033[A\033[K" * (len(options) + 2), end="")
 			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please enter a number.")
 			continue
 		choice = int(choice)
 
 		if choice < 1 or choice > len(options):
+			print("\033[A\033[K" * (len(options) + 2), end="")
 			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please choose a number from the range.")
 			continue
 
@@ -50,11 +62,11 @@ def get_valid_bool_input(
 		prompt: str,
 	) -> bool:
 	while True:
-		choice = input(f"{prompt} (yes/no)").lower()
+		choice = input(f"{prompt} (yes/no) ").lower()
 		if choice not in ["yes", "no", "y", "n"]:
 			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please enter \"yes\"/\"y\" or \"no\"\"n\".")
+			print("\033[A\033[K", end="")
 			continue
-
 		return choice in ["yes", "y"]
 
 def get_valid_any_input(
@@ -69,6 +81,7 @@ def get_valid_input(
 	while True:
 		choice = input(prompt)
 		if not choice:
+			print("\033[A\033[K", end="")
 			print(f"{Fore.RED}Invalid input.{Style.RESET_ALL} Please enter a valid value.")
 			continue
 

@@ -1,9 +1,9 @@
-import json, pathlib, shlex, sys
+import json, pathlib, shlex, sys, signal
 from io import TextIOWrapper
-from typing import TypedDict
+from typing import Literal, TypedDict
 from datetime import datetime
 from colorama import Fore, Style, init, deinit
-from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input, ignore_input_time
+from inputs import get_valid_input, get_valid_any_input, get_valid_arr_input, get_valid_bool_input, ignore_input_time
 
 RESOURCE_PATH = pathlib.Path(__file__).parent.resolve()
 
@@ -30,9 +30,11 @@ GAME_WORLD = {
 		"description": (
 			"You step into the darkness. The light from your lantern dances on the walls as you walk deeper into the cave.\n"
 			"It's eerily quiet except for the sound of your footsteps echoing against the stone walls.\n"
-			"Suddenly, the path ahead splits into two."
+			"Suddenly, the path ahead splits into two, along with an extra one around the right side of the cave"
 		),
 		"options": [
+			# TODO finish
+			#{"name": "Take the side Path", "next": "Side Path"},
 			{"name": "Take the narrow Path", "next": "Narrow Path"},
 			{"name": "Take the wide Path", "next": "Wide Path"}
 		],
@@ -60,6 +62,19 @@ GAME_WORLD = {
 		],
 	},
 
+	# TODO finish
+	#"Side Path":{
+	#	"description": (
+	#		"You wander round to the side of the cave, curious as to what lays inside...\n"
+	#		"Nervously stepping through, you switch on your lantern, take a deep breath and ponder on what could be causing these rumors.\n" 
+	#		"You then come onto a fork within your path, where shall you go?"
+	#	),
+	#	"options": [
+	#		{"name": "Take the narrow path", "next": "Narrow Path - Side Entrance"},
+	#		{"name": "Take the winding path", "next": "Winding Path"}
+	#	],
+	#},
+
 	"Narrow Path": {
 		"description": (
 			"You crawl through the tight space, your lantern flickering nervously as the walls close in on you.\n"
@@ -71,6 +86,13 @@ GAME_WORLD = {
 			{"name": "Shuffle along to the other side of the tight space", "next": "Pit Ledge Escape"}
 		],
 	},
+
+	# TODO
+	#"Narrow Path - Side Entrance": {
+	#	"description": (
+	#		""
+	#	)
+	#},
 
 	"Pit Ledge Escape": {
 		"description": (
@@ -182,6 +204,7 @@ class PlayerDataType(TypedDict):
 	current_location: str
 	game_name: str
 	last_updated: int
+	typewrite_effect: str
 
 def get_save_game_contents(file_pointer: TextIOWrapper | None = None) -> list[PlayerDataType]:
 	try:
@@ -210,16 +233,32 @@ def get_game_name_syntax(
 		arr.append(f"{name} - last updated: {last_updated}")
 	return arr
 
+def print_typewriter_effect(text: str, effect: Literal["Slow", "Fast", "None"]):
+	if effect == "None":
+		print(text)
+		return
+
+	speed = .1 if effect == "Slow" else .05
+	for i, char in enumerate(text):
+		if i != len(text):
+			print(char, end="", flush=True)
+		else:
+			print(char)
+		ignore_input_time(speed)
+
 class PlayerData():
-	current_location: str
-	game_name: str
-	last_updated: int
+	current_location: str = list(GAME_WORLD.keys())[0]
+	previous_location: str = None
+	game_name: str = None
+	last_updated: int = None
+	typewrite_effect: Literal["Slow", "Fast", "None"] = None
 
 	def __init__(self):
-		self.current_location = list(GAME_WORLD.keys())[0]
+		pass
 
-	def _print_section(self, title: str, content: str, color=Fore.GREEN):
-		print(f"{color}{Style.BRIGHT}\n{'-' * 40}\n{title.upper()}\n{'-' * 40}\n{Style.RESET_ALL}{content}\n")
+	def _print_section(self, title: str, content: str, colour=Fore.GREEN):
+		print(f"{colour}{Style.BRIGHT}\n{'-' * 40}\n{title.upper()}\n{'-' * 40}\n{Style.RESET_ALL}")
+		print_typewriter_effect(content, self.typewrite_effect)
 	
 	def play_game(self):
 		location = GAME_WORLD[self.current_location]
@@ -233,7 +272,6 @@ class PlayerData():
 		
 		if len(location["options"]) == 1 and "name" not in location["options"][0]:
 			self.current_location = location["options"][0]["next"]
-			self._save_game()
 
 			get_valid_any_input(f"{Fore.CYAN}Press any key to continue...{Style.RESET_ALL}")
 			return True
@@ -246,7 +284,6 @@ class PlayerData():
 			choices_arr
 		)
 		self.current_location = location["options"][choice]["next"]
-		self._save_game()
 		return True
 
 	def delete_game(self):
@@ -264,8 +301,8 @@ class PlayerData():
 		print(f"{Fore.RED}No saved games found.{Style.RESET_ALL}")
 
 	def new_game(self):
-		all_game_names = [x.get("game_name") for x in get_save_game_contents()]
-		
+		all_game_names = [x["game_name"] for x in get_save_game_contents()]
+
 		while True:
 			input_name = get_valid_input(f"{Fore.CYAN}What will you name this save? {Style.RESET_ALL}")
 			if input_name in all_game_names:
@@ -274,7 +311,8 @@ class PlayerData():
 			self.game_name = input_name
 			break
 
-		self._save_game()
+		self._set_typewriter_option()
+		
 		print(f"{Fore.GREEN}New game '{shlex.quote(self.game_name)}' created!{Style.RESET_ALL}")
 
 	def load_game(self):
@@ -287,30 +325,61 @@ class PlayerData():
 			)
 			loaded_save = all_player_datas[choicen_save_int]
 
-			self.current_location = loaded_save["current_location"]
-			self.game_name = loaded_save["game_name"]
-			self.last_updated = loaded_save["last_updated"]
+			for key, value in loaded_save.items():
+				setattr(self, key, value)
 			print(f"{Fore.GREEN}Loaded game: {shlex.quote(self.game_name)}{Style.RESET_ALL}")
+			
+			self._set_typewriter_option()
+
+			is_location_an_ending = not GAME_WORLD[self.current_location]["options"]
+
+			if is_location_an_ending and get_valid_bool_input("Do you want to load the point before you died?"):
+				self.previous_location = self.current_location
+				self.current_location = self.previous_location
+				print(f"{Fore.GREEN}Game loaded with previous location successfully!{Style.RESET_ALL}")
 			return True
 
 		print(f"{Fore.RED}No saved games found.{Style.RESET_ALL}")
 		return False
 
+	
+	def __setattr__(self, name, value):
+		if name == "current_location":
+			self.previous_location = self.current_location
+		
+		self.__dict__[name] = value
+		
+		if name != "last_updated":
+			self._save_game()
+
 	def _save_game(self, override: list[PlayerDataType] | None = None):
-		all_player_datas = get_save_game_contents() if override is None else override
+		if override is not None:
+			with open(SAVE_FILE_PATH, "w") as f:
+				json.dump(override, f)
+			return
 
-		if override is None:
-			self.last_updated = datetime.now().timestamp()
+		all_player_datas = get_save_game_contents()
+		self.last_updated = datetime.now().timestamp()
 
-			game = [i for i, player_data in enumerate(all_player_datas) if player_data["game_name"] == self.game_name]
-			print(game)
-			if game:
-				all_player_datas[all_player_datas.index(game[0])] = self.__dict__
-			else:
-				all_player_datas.append(self.__dict__)
+		for i, game in enumerate(all_player_datas):
+			if game["game_name"] == self.game_name:
+				all_player_datas[i] = self.__dict__
+				break
+		else: # TODO, update code so an else doesn't have to be used here
+			all_player_datas.append(self.__dict__)
 
 		with open(SAVE_FILE_PATH, "w") as f:
 			json.dump(all_player_datas, f)
+		
+	def _set_typewriter_option(self):
+		plain_options_arr = ["Slow", "Fast", "None"]
+		if self.typewrite_effect in plain_options_arr:
+			return
+		option = get_valid_arr_input(
+			f"{Fore.CYAN}Which typewriter effect do you want to use?{Style.RESET_ALL}\n",
+			[f"{Fore.GREEN}{plain_options_arr[0]}{Style.RESET_ALL}", f"{Fore.YELLOW}{plain_options_arr[1]}{Style.RESET_ALL}", f"{Fore.WHITE}{plain_options_arr[2]}{Style.RESET_ALL}"]
+		)
+		self.typewrite_effect = plain_options_arr[option]
 
 def slow_print(text: str, delay: float = .1):
 	for char in text.split("\n"):
@@ -320,34 +389,38 @@ def slow_print(text: str, delay: float = .1):
 
 if __name__ == "__main__":
 	init()
-	with open(RESOURCE_PATH / "resources/AdventureSoft_presents.txt", "r") as f:
-		slow_print(f"{Fore.CYAN}{Style.BRIGHT}{f.read()}{Style.RESET_ALL}", delay=.25)
+	try:
+		with open(RESOURCE_PATH / "resources/AdventureSoft_presents.txt", "r") as f:
+			slow_print(f"{Fore.CYAN}{Style.BRIGHT}{f.read()}{Style.RESET_ALL}", delay=.25)
 
-	with open(RESOURCE_PATH / "resources/CaveofShadows_logo.txt", "r") as f:
-		slow_print(f"{Fore.BLUE}{f.read()}{Style.RESET_ALL}")
+		with open(RESOURCE_PATH / "resources/CaveofShadows_logo.txt", "r") as f:
+			slow_print(f"{Fore.BLUE}{f.read()}{Style.RESET_ALL}")
 
-	while True:
-		choice = get_valid_arr_input(
-			f"{Fore.CYAN}Please choose an option:{Style.RESET_ALL}\n",
-			[f"{Fore.GREEN}Start a new game{Style.RESET_ALL}", f"{Fore.YELLOW}Load a saved game{Style.RESET_ALL}", f"{Fore.RED}Delete a saved game{Style.RESET_ALL}", f"{Fore.BLUE}Exit the game{Style.RESET_ALL}"]
-		)
-		player = PlayerData()
+		while True:
+			choice = get_valid_arr_input(
+				f"{Fore.CYAN}Please choose an option:{Style.RESET_ALL}\n",
+				[f"{Fore.GREEN}Start a new game{Style.RESET_ALL}", f"{Fore.YELLOW}Load a saved game{Style.RESET_ALL}", f"{Fore.RED}Delete a saved game{Style.RESET_ALL}", f"{Fore.BLUE}Exit the game{Style.RESET_ALL}"]
+			)
+			player = PlayerData()
 
-		if choice == 0:
-			player.new_game()
-		elif choice == 1 and not player.load_game():
-			continue
-		elif choice == 2:
-			player.delete_game()
-			continue
-		elif choice == 3:
-			print(f"{Fore.GREEN}Thank you for playing Cave of Shadows! Goodbye.{Style.RESET_ALL}")
-			WAITING_TIME = 2
-			for i in range(WAITING_TIME):
-				print(f"{Fore.RED}Exiting in {WAITING_TIME - i}s...{Style.RESET_ALL}", end="\r")
-				ignore_input_time(1)
-			deinit()
-			break
+			if choice == 0:
+				player.new_game()
+			elif choice == 1 and not player.load_game():
+				continue
+			elif choice == 2:
+				player.delete_game()
+				continue
+			elif choice == 3:
+				print(f"{Fore.GREEN}Thank you for playing Cave of Shadows! Goodbye.{Style.RESET_ALL}")
+				WAITING_TIME = 2
+				for i in range(WAITING_TIME):
+					print(f"{Fore.RED}Exiting in {WAITING_TIME - i}s...{Style.RESET_ALL}", end="\r")
+					ignore_input_time(1)
+				break
 
-		while player.play_game():
-			pass
+			while player.play_game():
+				pass
+	except KeyboardInterrupt:
+		# Reset the styles incase the user exits during the title sequence with Style.BRIGHT
+		print(f"{Style.RESET_ALL}{Fore.RED}User has exited. Goodbye!{Style.RESET_ALL}")
+	deinit()
