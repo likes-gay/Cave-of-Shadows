@@ -238,7 +238,7 @@ def print_typewriter_effect(text: str, effect: Literal["Slow", "Fast", "None"]):
 		print(text)
 		return
 
-	speed = .1 if effect == "Slow" else .05
+	speed = .025 if effect == "Slow" else .0025
 	for i, char in enumerate(text):
 		if i != len(text):
 			print(char, end="", flush=True)
