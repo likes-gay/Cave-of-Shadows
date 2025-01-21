@@ -8,16 +8,6 @@ else: # Linux
 	from getch import getch
 	import sys, tty, termios
 
-def getch():
-    old_settings = termios.tcgetattr(sys.stdin)
-    try:
-        tty.setcbreak(sys.stdin.fileno())
-        if select.select([sys.stdin], [], [], 0.1)[0]:
-            return sys.stdin.read(1)
-        return
-    finally:
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
-
 def ignore_input_time(seconds_to_ignore: float):
 	if system() == "Windows":
 		start_time = time.time()
