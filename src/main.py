@@ -242,9 +242,8 @@ def print_typewriter_effect(text: str, effect: Literal["Slow", "Fast", "None"]):
 	for i, char in enumerate(text):
 		if i != len(text):
 			print(char, end="", flush=True)
-		else:
-			print(char)
 		ignore_input_time(speed)
+	print("\n")
 
 class PlayerData():
 	current_location: str = list(GAME_WORLD.keys())[0]
