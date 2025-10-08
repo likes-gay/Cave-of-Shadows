@@ -73,7 +73,7 @@ jobs:
           path: linux-artifact
 
       - name: Publish
-        uses: softprops/action-gh-release@v2.3.4
+        uses: softprops/action-gh-release@v2.4.0
         with:
           files: |
             windows-artifact/Cave-of-Shadows-AdventureSoft.exe
