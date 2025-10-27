@@ -61,13 +61,13 @@ jobs:
 
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: Cave-of-Shadows-AdventureSoft-windows-latest
           path: windows-artifact
 
       - name: Download artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: Cave-of-Shadows-AdventureSoft-ubuntu-latest
           path: linux-artifact
